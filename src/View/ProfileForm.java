@@ -16,22 +16,29 @@ public class ProfileForm implements ActionListener {
     private Client c;
     private JTable table;
     private JScrollPane scrollPane;
-
     private DefaultTableModel tableModel;
+    private JButton myRequests;
+    private JButton orderHistory;
 
 
 
     public ProfileForm(Client c) {
         this.c = c;
         returnButton = new JButton("Marketplace");
+        myRequests =  new JButton("Requests");
+        orderHistory = new JButton("Order History");
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
         profilePanel.setLayout (null);
 
         profilePanel.add (returnButton);
+        profilePanel.add (myRequests);
+        profilePanel.add (orderHistory);
 
         returnButton.setBounds (100, 450, 120, 25);
+        myRequests.setBounds(550, 450, 120, 25);
+        orderHistory.setBounds(750, 450,120,25);
 
         addListeners();
     }
@@ -58,6 +65,10 @@ public class ProfileForm implements ActionListener {
     private void addListeners() {
         returnButton.addActionListener(this);
         returnButton.setActionCommand("marketplace");
+        myRequests.addActionListener(this);
+        myRequests.setActionCommand("requests");
+        orderHistory.addActionListener(this);
+        orderHistory.setActionCommand("orderHistory");
     }
 
     private void returnToMarket() throws IOException {
@@ -79,6 +90,11 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+                break;
+            case "requests":
+
+                break;
+            case "orderHistory":
                 break;
         }
     }
