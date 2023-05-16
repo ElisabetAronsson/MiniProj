@@ -13,9 +13,10 @@ import java.util.List;
 
 public class ProductProcedures {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ProductProcedures pc = new ProductProcedures();
         pc.getAllProducts();
+        pc.getBuyReqs(10);
     }
 
     /**
@@ -135,8 +136,8 @@ public class ProductProcedures {
     public Hashtable getBuyReqs(int user_id) throws SQLException {
         List<Object> list = new ArrayList<>();
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        CallableStatement statement = databaseConnection.getConnection().prepareCall("{CALL getBuyReqs(?)}");
-
+        CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM getbuyreqs(?)");
+        statement.setInt(1, user_id);
 
         DefaultTableModel tableModel = new DefaultTableModel();
         String[] columnNames = {"ProductID", "Title", "Price", "Production Year", "Color", "Condition"};
@@ -157,6 +158,15 @@ public class ProductProcedures {
 
         Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
         hashtable.put("Buy Requests", tableModel);
+
+        //Printing out test
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                System.out.print(tableModel.getValueAt(i, j) + " ");
+            }
+            System.out.println();
+        }
+
         return hashtable;
     }
 
