@@ -15,7 +15,7 @@ public class ProductProcedures {
 
     public static void main(String[] args) throws SQLException {
         ProductProcedures pc = new ProductProcedures();
-
+        pc.getOrderHistory(11);
     }
 
     /**
@@ -133,7 +133,7 @@ public class ProductProcedures {
        statement.setInt(1, user_id);
 
        DefaultTableModel tableModel = new DefaultTableModel();
-       String[] columnNames = {"ProductID", "Title", "BuyerID", "Production Year", "Date of transaction"};
+       String[] columnNames = {"ProductID", "Title", "BuyerID", "Date of transaction"};
        //Add the column names to the table model
        for (int i = 0; i < columnNames.length; i++) {
            tableModel.addColumn(columnNames[i]);
@@ -145,7 +145,7 @@ public class ProductProcedures {
        while (res.next()) {
            //Add the data to the table model
            tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
-                   res.getString(4), res.getString(5), res.getString(6)});
+                   res.getString(4), });
            counter++;
        }
 
