@@ -105,6 +105,7 @@ public class Client {
     public void sendUserIdToServerProfile(int userId) throws IOException {
         oos.writeObject(userId);
         oos.flush();
+        System.out.println("Skickar id från klient");
     }
 
     /**
@@ -153,11 +154,16 @@ public class Client {
     public void handleHashtableFromServer(Hashtable<String, DefaultTableModel> hashtable) {
         if(hashtable.containsKey("Marketplace Products")){
             mainForm.getProductForm().createTableModel(hashtable.get("Marketplace Products"));
-        } else if(hashtable.containsKey("My Products")){
-            mainForm.getProfileForm().createTableModels(hashtable.get("My Products"), TableType.activePosts);
-        } else if(hashtable.containsKey("Buy Requests")){
-            mainForm.getProfileForm().createTableModels(hashtable.get("Buy Requests"), TableType.buyRequests);
+        }
+
+        if(hashtable.containsKey("My Products")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("My Products"));
             mainForm.setProfilePanel();
+        }
+
+        if(hashtable.containsKey("Buy Requests")){
+           // mainForm.getProfileForm().createTableModels(hashtable.get("Buy Requests"), TableType.buyRequests);
+           // mainForm.setProfilePanel();
         }
     }
 

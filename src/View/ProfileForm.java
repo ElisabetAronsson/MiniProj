@@ -14,14 +14,11 @@ public class ProfileForm implements ActionListener {
     private JPanel profilePanel;
     private JButton returnButton;
     private Client c;
-    private JScrollPane activePosts;
-    private JScrollPane buyRequests;
-    private DefaultTableModel activePostTM;
-    private DefaultTableModel buyRequestsTM;
-    private JTable activePostTable;
-    private JTable buyRequestsTable;
-    private JPanel activePostPanel;
-    private JPanel buyRequestsPanel;
+    private JTable table;
+    private JScrollPane scrollPane;
+
+    private DefaultTableModel tableModel;
+
 
 
     public ProfileForm(Client c) {
@@ -39,38 +36,22 @@ public class ProfileForm implements ActionListener {
         addListeners();
     }
 
-    public void createTableModels(DefaultTableModel defaultTableModel, TableType tableType){
-        DefaultTableModel tableModel;
-        JTable table;
-        JScrollPane scrollPane;
-        int xcoordinates;
-
-        if(tableType == TableType.activePosts){
-            tableModel = activePostTM;
-            table = activePostTable;
-            scrollPane = activePosts;
-            xcoordinates = 50;
-
-        } else {
-            tableModel = buyRequestsTM;
-            table = buyRequestsTable;
-            scrollPane = buyRequests;
-            xcoordinates = 150;
-        }
-        if(tableModel == null){
+    public void createTableModel(DefaultTableModel tableModel){
+        //If it is not null, it means that the table is already created and just needs to be updated with new data.
+        if(this.tableModel == null){
             //Set the tableModel passed in the param to the local one, so it can be used outside of this function.
-            tableModel = defaultTableModel;
-            table = new JTable(tableModel);
+            this.tableModel = tableModel;
+            table = new JTable(this.tableModel);
             scrollPane = new JScrollPane(table);
-            scrollPane.setBounds(xcoordinates, 60, 350, 360);
+            scrollPane.setBounds(80, 60, 785, 360);
             profilePanel.add(scrollPane);
             profilePanel.revalidate();
         }
         else {
             //Just update the table if it's not null.
-            tableModel = defaultTableModel;
+            this.tableModel = tableModel;
             //Set the new updated model to the jtable.
-            table.setModel(tableModel);
+            table.setModel(this.tableModel);
         }
     }
 

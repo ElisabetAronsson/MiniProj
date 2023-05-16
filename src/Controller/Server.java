@@ -78,30 +78,27 @@ public class Server {
                                 getAllProductsFromDatabase();
                             }
                         } else if(object instanceof Integer){
-                            //sendClientUsersProducts();
-                            try {
-                                sendClientBuyReqs((int)object);
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
+                            System.out.println("hämtar id från server");
+                            sendClientUsersProducts((int)object);
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }).start();
         }
     }
 
-    private void sendClientBuyReqs(int userId) throws SQLException, IOException {
-        oos.writeObject(productProcedures.getBuyReqs(userId));
+    private void sendClientUsersProducts(int userId) throws IOException, SQLException {
+        oos.writeObject(productProcedures.getUsersProducts(userId));
+        System.out.println("Contains message server: " + productProcedures.
+                getUsersProducts(userId).containsKey("My Products"));
         oos.flush();
     }
-
-   // private void sendClientUsersProducts() {
-  //  }
 
     /**
      * Handles buy requests from the client
