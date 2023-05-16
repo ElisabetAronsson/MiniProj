@@ -15,8 +15,9 @@ public class ProductProcedures {
 
     public static void main(String[] args) throws SQLException {
         ProductProcedures pc = new ProductProcedures();
-        pc.getAllProducts();
-        pc.getBuyReqs(10);
+       // pc.getAllProducts();
+        //pc.getBuyReqs(10);
+        pc.getUsersProducts(10);
     }
 
     /**
@@ -189,8 +190,19 @@ public class ProductProcedures {
             counter++;
         }
 
+
+
         Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
         hashtable.put("My products", tableModel);
+
+
+        int rowCount = tableModel.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                System.out.print(tableModel.getValueAt(i, j) + " ");
+            }
+            System.out.println();
+        }
         System.out.println("Metoden fungerar");
         System.out.println("DB metod innehåller My products: " + hashtable.containsKey("My products"));
         return hashtable;
