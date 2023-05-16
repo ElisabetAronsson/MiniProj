@@ -14,69 +14,61 @@ public class ProfileForm implements ActionListener {
     private JPanel profilePanel;
     private JButton returnButton;
     private Client c;
-    private JScrollPane activePosts;
-    private JScrollPane buyRequests;
-    private DefaultTableModel activePostTM;
-    private DefaultTableModel buyRequestsTM;
-    private JTable activePostTable;
-    private JTable buyRequestsTable;
-    private JPanel activePostPanel;
-    private JPanel buyRequestsPanel;
+    private JTable table;
+    private JScrollPane scrollPane;
+    private DefaultTableModel tableModel;
+    private JButton myRequests;
+    private JButton orderHistory;
+
 
 
     public ProfileForm(Client c) {
         this.c = c;
         returnButton = new JButton("Marketplace");
+        myRequests =  new JButton("Requests");
+        orderHistory = new JButton("Order History");
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
         profilePanel.setLayout (null);
 
         profilePanel.add (returnButton);
+        profilePanel.add (myRequests);
+        profilePanel.add (orderHistory);
 
         returnButton.setBounds (100, 450, 120, 25);
+        myRequests.setBounds(550, 450, 120, 25);
+        orderHistory.setBounds(750, 450,120,25);
 
         addListeners();
     }
 
-    public void createTableModels(DefaultTableModel defaultTableModel, TableType tableType){
-        DefaultTableModel tableModel;
-        JTable table;
-        JScrollPane scrollPane;
-        int xcoordinates;
-
-        if(tableType == TableType.activePosts){
-            tableModel = activePostTM;
-            table = activePostTable;
-            scrollPane = activePosts;
-            xcoordinates = 50;
-
-        } else {
-            tableModel = buyRequestsTM;
-            table = buyRequestsTable;
-            scrollPane = buyRequests;
-            xcoordinates = 150;
-        }
-        if(tableModel == null){
+    public void createTableModel(DefaultTableModel tableModel){
+        //If it is not null, it means that the table is already created and just needs to be updated with new data.
+        if(this.tableModel == null){
             //Set the tableModel passed in the param to the local one, so it can be used outside of this function.
-            tableModel = defaultTableModel;
-            table = new JTable(tableModel);
+            this.tableModel = tableModel;
+            table = new JTable(this.tableModel);
             scrollPane = new JScrollPane(table);
-            scrollPane.setBounds(xcoordinates, 60, 350, 360);
+            scrollPane.setBounds(80, 60, 785, 360);
             profilePanel.add(scrollPane);
             profilePanel.revalidate();
         }
         else {
             //Just update the table if it's not null.
-            tableModel = defaultTableModel;
+            this.tableModel = tableModel;
             //Set the new updated model to the jtable.
-            table.setModel(tableModel);
+            table.setModel(this.tableModel);
         }
     }
 
     private void addListeners() {
         returnButton.addActionListener(this);
         returnButton.setActionCommand("marketplace");
+        myRequests.addActionListener(this);
+        myRequests.setActionCommand("requests");
+        orderHistory.addActionListener(this);
+        orderHistory.setActionCommand("orderHistory");
     }
 
     private void returnToMarket() throws IOException {
@@ -98,6 +90,11 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+                break;
+            case "requests":
+
+                break;
+            case "orderHistory":
                 break;
         }
     }

@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
 import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * This is the class for the client.
@@ -105,6 +106,7 @@ public class Client {
     public void sendUserIdToServerProfile(int userId) throws IOException {
         oos.writeObject(userId);
         oos.flush();
+        System.out.println("Skickar id från klient");
     }
 
     /**
@@ -134,7 +136,26 @@ public class Client {
                     if(object instanceof Hashtable<?,?>){
                         Hashtable<?,?> hashtable = (Hashtable<?, ?>) object;
                         handleHashtableFromServer((Hashtable<String, DefaultTableModel>) hashtable);
+
+                        // Looping through the entries of the Hashtable
+                        for (Map.Entry<?, ?> entry : hashtable.entrySet()) {
+                            String key = (String)entry.getKey();
+                            DefaultTableModel value = (DefaultTableModel)entry.getValue();
+
+                            // Now you can use the key and value
+                            System.out.println("Key: " + key);
+
+                            // Looping through the rows of the DefaultTableModel
+                            for (int i = 0; i < value.getRowCount(); i++) {
+                                // Looping through the columns of the DefaultTableModel
+                                for (int j = 0; j < value.getColumnCount(); j++) {
+                                    System.out.print(value.getValueAt(i, j) + " ");
+                                }
+                                System.out.println();
+                            }
+                        }
                     }
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -153,11 +174,19 @@ public class Client {
     public void handleHashtableFromServer(Hashtable<String, DefaultTableModel> hashtable) {
         if(hashtable.containsKey("Marketplace Products")){
             mainForm.getProductForm().createTableModel(hashtable.get("Marketplace Products"));
-        } else if(hashtable.containsKey("My Products")){
-            mainForm.getProfileForm().createTableModels(hashtable.get("My Products"), TableType.activePosts);
-        } else if(hashtable.containsKey("Buy Requests")){
-            mainForm.getProfileForm().createTableModels(hashtable.get("Buy Requests"), TableType.buyRequests);
+            System.out.println("test");
+        }
+
+        if(hashtable.containsKey("My products")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("My products"));
             mainForm.setProfilePanel();
+            System.out.println("test");
+        }
+
+        if(hashtable.containsKey("Buy Requests")){
+            System.out.println("test");
+           // mainForm.getProfileForm().createTableModels(hashtable.get("Buy Requests"), TableType.buyRequests);
+           // mainForm.setProfilePanel();
         }
     }
 

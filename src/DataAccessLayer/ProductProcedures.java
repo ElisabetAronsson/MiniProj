@@ -15,9 +15,7 @@ public class ProductProcedures {
 
     public static void main(String[] args) throws SQLException {
         ProductProcedures pc = new ProductProcedures();
-        //pc.getAllProducts();
-       // pc.getBuyReqs(10);
-        pc.getOrderHistory(11);
+
     }
 
     /**
@@ -178,7 +176,40 @@ public class ProductProcedures {
         statement.setInt(1, user_id);
 
         DefaultTableModel tableModel = new DefaultTableModel();
-        String[] columnNames = {"ProductID", "Title", "Price", "Production Year", "Color", "Condition"};
+        /**
+         * Här är det fel värden!
+         */
+        String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
+        //Add the column names to the table model
+        for (int i = 0; i < columnNames.length; i++) {
+            tableModel.addColumn(columnNames[i]);
+        }
+        int counter = 0;
+
+        statement.executeQuery();
+        ResultSet res = statement.getResultSet();
+        while (res.next()) {
+            tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                    res.getString(4), res.getString(5), res.getString(6)});
+            counter++;
+            //Add the data to the table model
+
+        }
+
+        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
+        hashtable.put("Buy Requests", tableModel);
+
+        return hashtable;
+    }
+
+    public Hashtable getUsersProducts(int user_id) throws SQLException {
+        List<Object> list = new ArrayList<>();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_my_products(?)");
+        statement.setInt(1, user_id);
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
         //Add the column names to the table model
         for (int i = 0; i < columnNames.length; i++) {
             tableModel.addColumn(columnNames[i]);
@@ -190,22 +221,27 @@ public class ProductProcedures {
         while (res.next()) {
             //Add the data to the table model
             tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
-                    res.getString(4), res.getString(5), res.getString(6)});
+                    res.getString(4), res.getString(5), res.getString(6), res.getString(7)});
             counter++;
         }
 
-        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
-        hashtable.put("Buy Requests", tableModel);
 
-        //Printing out test
-        for (int i = 0; i < tableModel.getRowCount(); i++) {
+
+        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
+        hashtable.put("My products", tableModel);
+
+
+        int rowCount = tableModel.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < tableModel.getColumnCount(); j++) {
                 System.out.print(tableModel.getValueAt(i, j) + " ");
             }
             System.out.println();
         }
-
+        System.out.println("Metoden fungerar");
+        System.out.println("DB metod innehåller My products: " + hashtable.containsKey("My products"));
         return hashtable;
+
     }
 
     public boolean registerNewProd(Product product) { //Skicka ut till alla online users att products är uppdaterad
