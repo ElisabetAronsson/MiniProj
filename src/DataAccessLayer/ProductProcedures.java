@@ -15,8 +15,9 @@ public class ProductProcedures {
 
     public static void main(String[] args) throws SQLException {
         ProductProcedures pc = new ProductProcedures();
-        pc.getAllProducts();
-        pc.getBuyReqs(10);
+        //pc.getAllProducts();
+       // pc.getBuyReqs(10);
+        pc.getOrderHistory(11);
     }
 
     /**
@@ -126,6 +127,43 @@ public class ProductProcedures {
     public boolean login() {
         return false;
     }
+
+   public Hashtable getOrderHistory(int user_id) throws SQLException{
+       List<Object> list = new ArrayList<>();
+       DatabaseConnection databaseConnection = new DatabaseConnection();
+       CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_order_history(?)");
+       statement.setInt(1, user_id);
+
+       DefaultTableModel tableModel = new DefaultTableModel();
+       String[] columnNames = {"ProductID", "Title", "BuyerID", "Production Year", "Date of transaction"};
+       //Add the column names to the table model
+       for (int i = 0; i < columnNames.length; i++) {
+           tableModel.addColumn(columnNames[i]);
+       }
+       int counter = 0;
+
+       statement.executeQuery();
+       ResultSet res = statement.getResultSet();
+       while (res.next()) {
+           //Add the data to the table model
+           tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                   res.getString(4), res.getString(5), res.getString(6)});
+           counter++;
+       }
+
+       Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
+       hashtable.put("Buy Requests", tableModel);
+
+       //Printing out test
+       for (int i = 0; i < tableModel.getRowCount(); i++) {
+           for (int j = 0; j < tableModel.getColumnCount(); j++) {
+               System.out.print(tableModel.getValueAt(i, j) + " ");
+           }
+           System.out.println();
+       }
+        return hashtable;
+    }
+
 
     /**
      * Fetches any product that a buyer wishes to buy.
