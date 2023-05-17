@@ -179,7 +179,7 @@ public class ProductProcedures {
         /**
          * Här är det fel värden!
          */
-        String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
+        String[] columnNames = {"ProductID", "Title", "Price","Year of production" ,"Color","Condition"};
         //Add the column names to the table model
         for (int i = 0; i < columnNames.length; i++) {
             tableModel.addColumn(columnNames[i]);
