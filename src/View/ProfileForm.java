@@ -92,9 +92,21 @@ public class ProfileForm implements ActionListener {
                 }
                 break;
             case "requests":
+                try {
+                    System.out.println("requests button pressed");
+                    c.accessRequests();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
                 break;
             case "orderHistory":
+                try {
+                    c.accessOrderHistory();
+                    System.out.println("orderHistory pressed");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 break;
         }
     }

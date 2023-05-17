@@ -150,7 +150,7 @@ public class ProductProcedures {
        }
 
        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
-       hashtable.put("Buy Requests", tableModel);
+       hashtable.put("Order History", tableModel);
 
        //Printing out test
        for (int i = 0; i < tableModel.getRowCount(); i++) {

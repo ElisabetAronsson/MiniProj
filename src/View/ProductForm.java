@@ -147,6 +147,7 @@ public class ProductForm implements ActionListener {
                 break;
             case "visitProfile":
                 try {
+                    System.out.println("what");
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();

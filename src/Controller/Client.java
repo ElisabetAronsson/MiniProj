@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Product;
-import Model.Request;
-import Model.TableType;
-import Model.User;
+import Model.*;
 import View.MainForm;
 
 import javax.swing.table.DefaultTableModel;
@@ -91,7 +88,20 @@ public class Client {
         String message = "marketplace";
         oos.writeObject(message);
         oos.flush();
+    }
 
+    public void accessOrderHistory() throws IOException {
+        System.out.println("accessorderhistory function called");
+        ServerRequest serverRequest = new ServerRequest("getOrderHistory",userId);
+        oos.writeObject(serverRequest);
+        oos.flush();
+    }
+
+    public void accessRequests() throws IOException{
+        System.out.println("acessRequests function called");
+        ServerRequest serverRequest = new ServerRequest("getRequests",userId);
+        oos.writeObject(serverRequest);
+        oos.flush();
     }
 
     public void sendRequesttoServer( int productId) throws IOException {
@@ -183,10 +193,15 @@ public class Client {
             System.out.println("test");
         }
 
+        if(hashtable.containsKey("Order History")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("Order History"));
+            mainForm.setProfilePanel();
+        }
+
         if(hashtable.containsKey("Buy Requests")){
             System.out.println("test");
-           // mainForm.getProfileForm().createTableModels(hashtable.get("Buy Requests"), TableType.buyRequests);
-           // mainForm.setProfilePanel();
+            mainForm.getProfileForm().createTableModel(hashtable.get("Buy Requests"));
+            mainForm.setProfilePanel();
         }
     }
 

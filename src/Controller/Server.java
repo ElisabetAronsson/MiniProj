@@ -4,6 +4,7 @@ import DataAccessLayer.ProductProcedures;
 import DataAccessLayer.UserProcedures;
 import Model.Product;
 import Model.Request;
+import Model.ServerRequest;
 import Model.User;
 
 import javax.swing.table.DefaultTableModel;
@@ -81,6 +82,20 @@ public class Server {
                             System.out.println("hämtar id från server");
                             sendClientUsersProducts((int)object);
                         }
+                        else if(object instanceof ServerRequest){
+                            System.out.println("ServerRequest sent from client to server");
+                            ServerRequest serverRequest = (ServerRequest) object;
+                            if(serverRequest.getRequestType().equals("getOrderHistory")){
+                                System.out.println("Server sending order history to client");
+                                sendClientOrderHistory(serverRequest.getUserID());
+                            }
+
+                            if(serverRequest.getRequestType().equals("getRequests")){
+                                System.out.println("Server sending requests to client");
+                                sendClientRequests(serverRequest.getUserID());
+                            }
+
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -97,6 +112,16 @@ public class Server {
         oos.writeObject(productProcedures.getUsersProducts(userId));
         System.out.println("Contains message server: " + productProcedures.
                 getUsersProducts(userId).containsKey("My Products"));
+        oos.flush();
+    }
+
+    private void sendClientOrderHistory(int userId) throws IOException, SQLException {
+        oos.writeObject(productProcedures.getOrderHistory(userId));
+        oos.flush();
+    }
+
+    private void sendClientRequests(int userId) throws IOException, SQLException {
+        oos.writeObject(productProcedures.getBuyReqs(userId));
         oos.flush();
     }
 
