@@ -111,6 +111,20 @@ public class Client {
     }
 
     /**
+     * Sends the data from the accepted request to the server.
+     * Acquires the data fromt the JTable shown in the GUI.
+     *
+     * @param productName The name of the product that was sold.
+     * @param buyerId     The id of the user that bought the product.
+     * @param productId
+     */
+    public void sendAcceptRequestToServer(String productName, int buyerId, int productId) throws IOException {
+        Request request = new Request(productName, buyerId, productId, "acceptRequest", this.userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
+
+    /**
      * Sends the user_id of your user to receive information about your products and order history
      */
     public void sendUserIdToServerProfile(int userId) throws IOException {
