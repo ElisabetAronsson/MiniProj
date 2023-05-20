@@ -72,7 +72,13 @@ public class Server {
                         }
                         else if (object instanceof Request){
                             Request request = (Request) object;
-                            handleBuyReqFromClient(request);
+                            if(request.getRequestType() == null){
+                                handleBuyReqFromClient(request);
+                            }
+                            else {
+                                System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
+                                handleAcceptBuyReqFromClient(request);
+                            }
                         }
                         else if (object instanceof String){
                             if (object == "marketplace") {
@@ -131,6 +137,19 @@ public class Server {
      */
     private boolean handleBuyReqFromClient(Request request) {
         return productProcedures.buyReq(request.getBuyer_id(), request.getProduct_id());
+    }
+
+    /**
+     * Handles the buy request from the client.
+     * @param request
+     */
+    public void handleAcceptBuyReqFromClient(Request request) throws SQLException, IOException {
+        System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
+        productProcedures.purchaseProd(request.getProduct_id(), request.getProductName(), request.getBuyer_id());
+        //Update the client with the new request table from the DB.
+        sendClientRequests(request.getUserId());
+        //Update the client with the new product table from the DB after deleting the accepted product.
+        getAllProductsFromDatabase();
     }
 
     /**

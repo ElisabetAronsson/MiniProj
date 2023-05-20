@@ -1,7 +1,6 @@
 package View;
 
 import Controller.Client;
-import Model.TableType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +18,7 @@ public class ProfileForm implements ActionListener {
     private DefaultTableModel tableModel;
     private JButton myRequests;
     private JButton orderHistory;
+    private JButton acceptRequestButton;
 
 
 
@@ -27,6 +27,7 @@ public class ProfileForm implements ActionListener {
         returnButton = new JButton("Marketplace");
         myRequests =  new JButton("Requests");
         orderHistory = new JButton("Order History");
+        acceptRequestButton = new JButton("Accept Request");
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -35,10 +36,12 @@ public class ProfileForm implements ActionListener {
         profilePanel.add (returnButton);
         profilePanel.add (myRequests);
         profilePanel.add (orderHistory);
+        profilePanel.add (acceptRequestButton);
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
+        acceptRequestButton.setBounds(750, 500, 120, 25);
 
         addListeners();
     }
@@ -69,6 +72,35 @@ public class ProfileForm implements ActionListener {
         myRequests.setActionCommand("requests");
         orderHistory.addActionListener(this);
         orderHistory.setActionCommand("orderHistory");
+        acceptRequestButton.addActionListener(this);
+        acceptRequestButton.setActionCommand("acceptRequest");
+    }
+
+    /**
+     * This function accepts a buy request.
+     */
+    public void acceptRequest(){
+        String productName = "";
+        String buyerId = "";
+        String productId = "";
+        try {
+            if(!table.getSelectionModel().isSelectionEmpty()) {
+                productName = (String) tableModel.getValueAt(table.getSelectedRow(), 2);
+                buyerId = (String) tableModel.getValueAt(table.getSelectedRow(), 1);
+                productId = (String) tableModel.getValueAt(table.getSelectedRow(), 0);
+                int input = JOptionPane.showOptionDialog(null, "Do you want to sell product: " +
+                                productName + " to buyer: " + buyerId, "Purchase confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, null, null);
+                if(input == 0){
+                    c.sendAcceptRequestToServer(productName, Integer.valueOf(buyerId), Integer.valueOf(productId));
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "Pick an item you want to accept the buy request for." +
+                        "then proceed to press the Accept Request button.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void returnToMarket() throws IOException {
@@ -107,6 +139,9 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                break;
+            case "acceptRequest":
+                    acceptRequest();
                 break;
         }
     }
