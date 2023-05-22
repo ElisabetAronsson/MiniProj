@@ -132,6 +132,12 @@ public class Client {
         oos.flush();
     }
 
+    public void sendWishToServer(int userID,String productName) throws IOException {
+        Wish wish = new Wish(userID, productName);
+        oos.writeObject(wish);
+        oos.flush();
+    }
+
     /**
      * Sends the user_id of your user to receive information about your products and order history
      */
@@ -262,10 +268,7 @@ public class Client {
         System.out.println("The user ID "+userId+" was successfully received from the server and set.");
     }
 
-    public void createWish(int userID,String productName){
 
-
-    }
 
     /**
      * Returns the MainForm of the application.
@@ -286,6 +289,5 @@ public class Client {
     public int getUserId() {
         return userId;
     }
-
 
 }

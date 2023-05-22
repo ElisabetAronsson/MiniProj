@@ -1,6 +1,7 @@
 package DataAccessLayer;
 import Model.Product;
 import Model.User;
+import Model.Wish;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -55,4 +56,7 @@ public class WishProcedures
     }
 
 
+    public Object addWishToDataBase(Wish wish) {
+
+    }
 }

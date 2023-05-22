@@ -166,6 +166,19 @@ public class ProfileForm implements ActionListener {
             case "acceptRequest":
                     acceptRequest();
                 break;
+
+            case "createWish":
+                try {
+                    createWish();  // Call a new method in the Client class
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
         }
+    }
+
+    private void createWish() throws IOException {
+        String type=JOptionPane.showInputDialog(null,"Enter the products type");
+        c.sendWishToServer(c.getUserId(), type);
     }
 }
