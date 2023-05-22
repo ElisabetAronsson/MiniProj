@@ -75,6 +75,10 @@ public class Server {
                             if(request.getRequestType() == null){
                                 handleBuyReqFromClient(request);
                             }
+                            else if(request.getRequestType().equals("declineRequest")){
+                                System.out.println("Declining request for product: " + request.getProduct_id());
+                                handleDeclineBuyReqFromClient(request);
+                            }
                             else {
                                 System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
                                 handleAcceptBuyReqFromClient(request);
@@ -141,7 +145,7 @@ public class Server {
 
     /**
      * Handles the buy request from the client.
-     * @param request
+     * @param request The request object holding data
      */
     public void handleAcceptBuyReqFromClient(Request request) throws SQLException, IOException {
         System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
@@ -150,6 +154,15 @@ public class Server {
         sendClientRequests(request.getUserId());
         //Update the client with the new product table from the DB after deleting the accepted product.
         getAllProductsFromDatabase();
+    }
+
+    /**
+     * This function handles the decline request from the client.
+     * @param request The request object holding data
+     */
+    public void handleDeclineBuyReqFromClient(Request request) throws SQLException, IOException {
+        productProcedures.declinePurchaseRequest(request.getProduct_id());
+        sendClientRequests(request.getUserId());
     }
 
     /**

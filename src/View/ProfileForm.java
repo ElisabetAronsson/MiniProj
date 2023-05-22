@@ -19,6 +19,7 @@ public class ProfileForm implements ActionListener {
     private JButton myRequests;
     private JButton orderHistory;
     private JButton acceptRequestButton;
+    private JButton declineRequestButton;
 
 
 
@@ -28,6 +29,7 @@ public class ProfileForm implements ActionListener {
         myRequests =  new JButton("Requests");
         orderHistory = new JButton("Order History");
         acceptRequestButton = new JButton("Accept Request");
+        declineRequestButton = new JButton("Decline Request");
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -37,11 +39,13 @@ public class ProfileForm implements ActionListener {
         profilePanel.add (myRequests);
         profilePanel.add (orderHistory);
         profilePanel.add (acceptRequestButton);
+        profilePanel.add (declineRequestButton);
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
+        declineRequestButton.setBounds(550, 500, 120, 25);
 
         addListeners();
     }
@@ -74,6 +78,8 @@ public class ProfileForm implements ActionListener {
         orderHistory.setActionCommand("orderHistory");
         acceptRequestButton.addActionListener(this);
         acceptRequestButton.setActionCommand("acceptRequest");
+        declineRequestButton.addActionListener(this);
+        declineRequestButton.setActionCommand("declineRequest");
     }
 
     /**
@@ -97,6 +103,29 @@ public class ProfileForm implements ActionListener {
             } else{
                 JOptionPane.showMessageDialog(null, "Pick an item you want to accept the buy request for." +
                         "then proceed to press the Accept Request button.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This function declines a buy request.
+     */
+    public void declineRequest(){
+        String productId = "";
+        try {
+            if(!table.getSelectionModel().isSelectionEmpty()) {
+                productId = (String) tableModel.getValueAt(table.getSelectedRow(), 0);
+                int input = JOptionPane.showOptionDialog(null, "Do you want to decline the request for the product: " + productId
+                        , "Purchase confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, null, null);
+                if(input == 0){
+                    c.sendDeclineRequestToServer(Integer.valueOf(productId));
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "Pick an item you want to decline the buy request for." +
+                        "then proceed to press the Decline Request button.");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,6 +171,9 @@ public class ProfileForm implements ActionListener {
                 break;
             case "acceptRequest":
                     acceptRequest();
+                break;
+            case "declineRequest":
+                declineRequest();
                 break;
         }
     }

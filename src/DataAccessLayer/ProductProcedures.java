@@ -102,6 +102,28 @@ public class ProductProcedures {
         }
     }
 
+    /**
+     * This function deletes a request from the request table.
+     * @param product_id The id of the product being deleted from the request table.
+     * @return true or false depending on success
+     */
+    public boolean declinePurchaseRequest(int product_id){
+        DatabaseConnection dc = new DatabaseConnection();
+        try {
+            CallableStatement statement = dc.getConnection().prepareCall("{CALL decline_buy_request (?)}");
+
+            //Remove the product from the request table
+            statement.setInt(1, product_id);
+
+            statement.execute();
+
+            return true;    //If all goes well, return true
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;   // Return false if any exception occurs
+        }
+    }
+
 
     public boolean buyReq(int user_id, int product_id) { // Måste uppdatera ägaren av produkten att en req finns
         DatabaseConnection dc = new DatabaseConnection();
