@@ -20,6 +20,9 @@ public class ProfileForm implements ActionListener {
     private JButton orderHistory;
     private JButton acceptRequestButton;
 
+    private JButton wishlistButton;  // New button for visiting wishlist
+
+
 
 
     public ProfileForm(Client c) {
@@ -28,6 +31,7 @@ public class ProfileForm implements ActionListener {
         myRequests =  new JButton("Requests");
         orderHistory = new JButton("Order History");
         acceptRequestButton = new JButton("Accept Request");
+        wishlistButton = new JButton("Visit Wishlist");
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -37,11 +41,14 @@ public class ProfileForm implements ActionListener {
         profilePanel.add (myRequests);
         profilePanel.add (orderHistory);
         profilePanel.add (acceptRequestButton);
+        profilePanel.add(wishlistButton);
+
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
+        wishlistButton.setBounds(350, 450, 120, 25);
 
         addListeners();
     }
@@ -68,12 +75,19 @@ public class ProfileForm implements ActionListener {
     private void addListeners() {
         returnButton.addActionListener(this);
         returnButton.setActionCommand("marketplace");
+
         myRequests.addActionListener(this);
         myRequests.setActionCommand("requests");
+
         orderHistory.addActionListener(this);
         orderHistory.setActionCommand("orderHistory");
+
         acceptRequestButton.addActionListener(this);
         acceptRequestButton.setActionCommand("acceptRequest");
+
+        wishlistButton.addActionListener(this);
+        wishlistButton.setActionCommand("visitWishlist");
+
     }
 
     /**
@@ -123,6 +137,15 @@ public class ProfileForm implements ActionListener {
                     ex.printStackTrace();
                 }
                 break;
+
+            case "visitWishlist":
+                try {
+                    c.accessWishlist();  // Call the new method in the Client class
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
+
             case "requests":
                 try {
                     System.out.println("requests button pressed");

@@ -15,6 +15,7 @@ public class ProductForm implements ActionListener {
     private JButton addProductButton;
     private JButton profileButton;
     private JButton purchaseButton;
+
     private JTable table;
     private Client c;
     private JScrollPane scrollPane;
@@ -87,7 +88,6 @@ public class ProductForm implements ActionListener {
         profileButton.addActionListener(this);
         profileButton.setActionCommand("visitProfile");
 
-
     }
 
     /**
@@ -145,6 +145,7 @@ public class ProductForm implements ActionListener {
             case "buyProduct":
                 buyProduct();
                 break;
+
             case "visitProfile":
                 try {
                     System.out.println("what");

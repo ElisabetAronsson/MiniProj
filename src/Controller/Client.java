@@ -104,6 +104,14 @@ public class Client {
         oos.flush();
     }
 
+    public void accessWishlist() throws IOException {
+        System.out.println("accessWishList function in client called");
+        ServerRequest serverRequest = new ServerRequest("accessWishList",userId);
+        oos.writeObject(serverRequest);
+        oos.flush();
+
+    }
+
     public void sendRequesttoServer( int productId) throws IOException {
         Request request = new Request(this.userId, productId);
         oos.writeObject(request);
@@ -217,6 +225,14 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("Buy Requests"));
             mainForm.setProfilePanel();
         }
+
+        if(hashtable.containsKey("My Wishlist")){
+            System.out.println("handleHashTable from server: My wishlist");
+            mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
+            mainForm.setProfilePanel();
+        }
+
+
     }
 
 
@@ -246,6 +262,11 @@ public class Client {
         System.out.println("The user ID "+userId+" was successfully received from the server and set.");
     }
 
+    public void createWish(int userID,String productName){
+
+
+    }
+
     /**
      * Returns the MainForm of the application.
      * @return mainForm
@@ -265,4 +286,6 @@ public class Client {
     public int getUserId() {
         return userId;
     }
+
+
 }
