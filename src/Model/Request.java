@@ -9,6 +9,7 @@ public class Request implements Serializable {
     private int product_id;
     private String requestType;
     private String productName;
+    private String param;
 
     private int userId;
 
@@ -41,6 +42,19 @@ public class Request implements Serializable {
         this.userId = userId;
     }
 
+    /**
+     * This constructor is used to send different kinds of parameters to the server.
+     * What will happen is decided by the requestType.
+     * @param param The param that will be sent to the server.
+     * @param requestType The type of the request.
+     * @param userId The id of the user making the request.
+     */
+    public Request(String param, String requestType, int userId){
+        this.param = param;
+        this.requestType = requestType;
+        this.userId = userId;
+    }
+
     public int getBuyer_id() {
         return buyer_id;
     }
@@ -67,5 +81,9 @@ public class Request implements Serializable {
 
     public int getUserId() {
         return this.userId;
+    }
+
+    public String getParam(){
+        return this.param;
     }
 }

@@ -79,9 +79,18 @@ public class Server {
                                 System.out.println("Declining request for product: " + request.getProduct_id());
                                 handleDeclineBuyReqFromClient(request);
                             }
-                            else {
+                            else if(request.getRequestType().equals("acceptRequest")){
                                 System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
                                 handleAcceptBuyReqFromClient(request);
+                            }
+                            else if(request.getRequestType().equals("searchByType")){
+                                sendSearchByTypeToClient(request);
+                            }
+                            else if(request.getRequestType().equals("searchByPrice")){
+                                sendSearchByPriceToClient(request);
+                            }
+                            else if(request.getRequestType().equals("searchByCondition")){
+                                sendSearchByConditionToClient(request);
                             }
                         }
                         else if (object instanceof String){
@@ -141,6 +150,36 @@ public class Server {
      */
     private boolean handleBuyReqFromClient(Request request) {
         return productProcedures.buyReq(request.getBuyer_id(), request.getProduct_id());
+    }
+
+    /**
+     * Sends the products by type to the client.
+     * @param request Includes data that was sent from the client.
+     */
+    public void sendSearchByTypeToClient(Request request) throws IOException {
+        Hashtable results = productProcedures.getProductsByTitle(request.getParam());
+        oos.writeObject(results);
+        oos.flush();
+    }
+
+    /**
+     * Sends the products by price to the client.
+     * @param request Includes data that was sent from the client.
+     */
+    public void sendSearchByPriceToClient(Request request) throws IOException {
+        Hashtable results = productProcedures.getProductsByPrice(request.getParam());
+        oos.writeObject(results);
+        oos.flush();
+    }
+
+    /**
+     * Sends the products by condition to the client.
+     * @param request Includes data that was sent from the client.
+     */
+    public void sendSearchByConditionToClient(Request request) throws IOException {
+        Hashtable results = productProcedures.getProductsByCondition(request.getParam());
+        oos.writeObject(results);
+        oos.flush();
     }
 
     /**

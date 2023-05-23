@@ -53,6 +53,111 @@ public class ProductProcedures {
     }
 
     /**
+     * Returns all the products from the database based on their title.
+     * @param title The title of the product.
+     * @return Hashtable to update the GUI.
+     */
+    public Hashtable getProductsByTitle(String title){
+        DatabaseConnection dc = new DatabaseConnection();
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ call get_products_by_type(?) }")) {
+            //Create the table model
+            DefaultTableModel tableModel = new DefaultTableModel();
+            String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
+            //Add the column names to the table model
+            for (int i = 0; i < columnNames.length; i++) {
+                tableModel.addColumn(columnNames[i]);
+            }
+            int counter = 0;
+
+            statement.setString(1, title);
+            statement.executeQuery();
+            ResultSet res = statement.getResultSet();
+            while (res.next()) {
+                //Add the data to the table model
+                tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                        res.getString(4), res.getString(5), res.getString(6), res.getString(7)});
+                counter++;
+            }
+            //Return the table model with the data
+            Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
+            hashtable.put("Marketplace Products", tableModel);
+            return hashtable;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Returns all the products from the database based on their title.
+     * @param price The price of the product.
+     * @return Hashtable to update the GUI.
+     */
+    public Hashtable getProductsByPrice(String price){
+        DatabaseConnection dc = new DatabaseConnection();
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ call get_products_by_price(?) }")) {
+            //Create the table model
+            DefaultTableModel tableModel = new DefaultTableModel();
+            String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
+            //Add the column names to the table model
+            for (int i = 0; i < columnNames.length; i++) {
+                tableModel.addColumn(columnNames[i]);
+            }
+            int counter = 0;
+
+            statement.setInt(1, Integer.parseInt(price));
+            statement.executeQuery();
+            ResultSet res = statement.getResultSet();
+            while (res.next()) {
+                //Add the data to the table model
+                tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                        res.getString(4), res.getString(5), res.getString(6), res.getString(7)});
+                counter++;
+            }
+            //Return the table model with the data
+            Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
+            hashtable.put("Marketplace Products", tableModel);
+            return hashtable;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Returns all the products from the database based on their title.
+     * @param condition The condition of the product.
+     * @return Hashtable to update the GUI.
+     */
+    public Hashtable getProductsByCondition(String condition){
+        DatabaseConnection dc = new DatabaseConnection();
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ call get_products_by_condition(?) }")) {
+            //Create the table model
+            DefaultTableModel tableModel = new DefaultTableModel();
+            String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
+            //Add the column names to the table model
+            for (int i = 0; i < columnNames.length; i++) {
+                tableModel.addColumn(columnNames[i]);
+            }
+            int counter = 0;
+
+            statement.setString(1, condition);
+            statement.executeQuery();
+            ResultSet res = statement.getResultSet();
+            while (res.next()) {
+                //Add the data to the table model
+                tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                        res.getString(4), res.getString(5), res.getString(6), res.getString(7)});
+                counter++;
+            }
+            //Return the table model with the data
+            Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
+            hashtable.put("Marketplace Products", tableModel);
+            return hashtable;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Adds a product for sale.
      *
      * @param product The product to add for sale.
