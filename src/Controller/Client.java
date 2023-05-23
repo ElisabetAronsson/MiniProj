@@ -124,6 +124,12 @@ public class Client {
         oos.flush();
     }
 
+    public void sendDeclineRequestToServer(int productId) throws IOException {
+        Request request = new Request(productId, "declineRequest", this.userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
+
     /**
      * Sends the user_id of your user to receive information about your products and order history
      */
