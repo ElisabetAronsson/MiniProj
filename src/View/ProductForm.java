@@ -19,6 +19,9 @@ public class ProductForm implements ActionListener {
     private Client c;
     private JScrollPane scrollPane;
     private DefaultTableModel tableModel;
+    private JButton searchByTypeButton;
+    private JButton searchByPriceButton;
+    private JButton searchByConditionButton;
 
     public ProductForm(Client c) {
         //Apply passed client variable to the local one.
@@ -28,6 +31,9 @@ public class ProductForm implements ActionListener {
         addProductButton = new JButton("Add Product");
         purchaseButton = new JButton("Buy Product");
         profileButton = new JButton ("My Inventory");
+        searchByTypeButton = new JButton("Search By Type");
+        searchByPriceButton = new JButton("Search By Price");
+        searchByConditionButton = new JButton("Search By Condition");
 
 
         //adjust size and set layout
@@ -39,11 +45,17 @@ public class ProductForm implements ActionListener {
         productPanel.add (addProductButton);
         productPanel.add (purchaseButton);
         productPanel.add (profileButton);
+        productPanel.add (searchByTypeButton);
+        productPanel.add (searchByPriceButton);
+        productPanel.add (searchByConditionButton);
 
         //set component bounds (only needed by Absolute Positioning)
         addProductButton.setBounds (100, 450, 120, 25);
         purchaseButton.setBounds (250, 450, 120,25);
         profileButton.setBounds (700, 450, 120, 25);
+        searchByTypeButton.setBounds (100, 500, 120, 25);
+        searchByPriceButton.setBounds (420, 500, 120, 25);
+        searchByConditionButton.setBounds (250, 500, 150,25);
 
 
         //Add listeners to buttons
@@ -87,6 +99,15 @@ public class ProductForm implements ActionListener {
         profileButton.addActionListener(this);
         profileButton.setActionCommand("visitProfile");
 
+        searchByTypeButton.addActionListener(this);
+        searchByTypeButton.setActionCommand("searchType");
+
+        searchByConditionButton.addActionListener(this);
+        searchByConditionButton.setActionCommand("searchCondition");
+
+        searchByPriceButton.addActionListener(this);
+        searchByPriceButton.setActionCommand("searchPrice");
+
 
     }
 
@@ -128,6 +149,33 @@ public class ProductForm implements ActionListener {
     }
 
     /**
+     * Searches after a product by its type.
+     * @throws IOException
+     */
+    public void searchByType() throws IOException {
+        String type=JOptionPane.showInputDialog(null,"Enter the products type");
+        c.sendSearchByTypeToServer(type);
+    };
+
+    /**
+     * Searches after a product by its price.
+     * @throws IOException
+     */
+    public void searchByPrice() throws IOException {
+        String price=JOptionPane.showInputDialog(null,"Enter the products price");
+        c.sendSearchByPriceToServer(price);
+    };
+
+    /**
+     * Searches after a product by its condition.
+     * @throws IOException
+     */
+    public void searchByCondition() throws IOException {
+        String condition=JOptionPane.showInputDialog(null,"Enter the products condition");
+        c.sendSearchByConditionToServer(condition);
+    };
+
+    /**
      * Returns the product panel.
      * @return productPanel
      */
@@ -151,6 +199,27 @@ public class ProductForm implements ActionListener {
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();
+                }
+                break;
+            case "searchType":
+                try {
+                    searchByType();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
+            case "searchPrice":
+                try {
+                    searchByPrice();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
+            case "searchCondition":
+                try {
+                    searchByCondition();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
                 break;
 

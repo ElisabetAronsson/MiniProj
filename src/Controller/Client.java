@@ -124,6 +124,11 @@ public class Client {
         oos.flush();
     }
 
+    /**
+     * Sends a decline request to the server.
+     * @param productId The id of the product that was decliend.
+     * @throws IOException
+     */
     public void sendDeclineRequestToServer(int productId) throws IOException {
         Request request = new Request(productId, "declineRequest", this.userId);
         oos.writeObject(request);
@@ -137,6 +142,24 @@ public class Client {
         oos.writeObject(userId);
         oos.flush();
         System.out.println("Skickar id från klient");
+    }
+
+    public void sendSearchByTypeToServer(String type) throws IOException {
+        Request request = new Request(type, "searchByType", userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
+
+    public void sendSearchByPriceToServer(String price) throws IOException {
+        Request request = new Request(price, "searchByPrice", userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
+
+    public void sendSearchByConditionToServer(String condition) throws IOException {
+        Request request = new Request(condition, "searchByCondition", userId);
+        oos.writeObject(request);
+        oos.flush();
     }
 
     /**
