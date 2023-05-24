@@ -45,7 +45,7 @@ public class Client {
      * @throws IOException
      */
     public void connectToServer() throws IOException {
-        socket = new Socket("localhost", 8080);
+        socket = new Socket("localhost", 8888);
         //Outputstream to send objects to the server.
         oos = new ObjectOutputStream(socket.getOutputStream());
     }
@@ -253,21 +253,27 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("My products"));
             mainForm.setProfilePanel();
             System.out.println("test");
+            mainForm.getProfileForm().setTitle("My Inventory");
+
         }
 
         if(hashtable.containsKey("Order History")){
             mainForm.getProfileForm().createTableModel(hashtable.get("Order History"));
             mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Order History");
         }
 
         if(hashtable.containsKey("Buy Requests")){
             mainForm.getProfileForm().createTableModel(hashtable.get("Buy Requests"));
             mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Requests");
         }
 
         if(hashtable.containsKey("My cart")){
             mainForm.getProfileForm().createTableModel(hashtable.get("My cart"));
             mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Shopping Cart");
+
         }
     }
 

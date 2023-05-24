@@ -178,7 +178,6 @@ public class ProfileForm implements ActionListener {
         switch (action){
             case "marketplace":
                 try {
-                    title.setText("My Inventory");
                     searchByDate.setVisible(false);
                     acceptRequestButton.setVisible(false);
                     declineRequestButton.setVisible(false);
@@ -194,7 +193,6 @@ public class ProfileForm implements ActionListener {
                     acceptRequestButton.setVisible(true);
                     declineRequestButton.setVisible(true);
                     searchByDate.setVisible(false);
-                    title.setText("Requests");
                     System.out.println("requests button pressed");
                     c.accessRequests();
                 } catch (IOException ex) {
@@ -204,7 +202,6 @@ public class ProfileForm implements ActionListener {
                 break;
             case "orderHistory":
                 try {
-                    title.setText("Order History");
                     searchByDate.setVisible(true);
                     acceptRequestButton.setVisible(false);
                     declineRequestButton.setVisible(false);
@@ -225,7 +222,6 @@ public class ProfileForm implements ActionListener {
                 break;
             case "myInventory":
                 try {
-                    title.setText("My Inventory");
                     searchByDate.setVisible(false);
                     acceptRequestButton.setVisible(false);
                     declineRequestButton.setVisible(false);
@@ -246,5 +242,9 @@ public class ProfileForm implements ActionListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setTitle(String name) {
+        title.setText(name);
     }
 }

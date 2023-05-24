@@ -9,7 +9,7 @@ public class Messager {
     /**
      * Lazy draft for the direct messaging controller class
      */
-    private static int PORT = 8888; //Is this needed?
+    private static int PORT = 8080; //Is this needed?
     private ArrayList<Message> messages;
 
     public Messager(){
