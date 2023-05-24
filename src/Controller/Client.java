@@ -157,7 +157,6 @@ public class Client {
     public void sendUserIdToServerProfile(int userId) throws IOException {
         oos.writeObject(userId);
         oos.flush();
-        System.out.println("Skickar id från klient");
     }
 
     public void sendSearchByTypeToServer(String type) throws IOException {
@@ -217,24 +216,6 @@ public class Client {
                     if(object instanceof Hashtable<?,?>){
                         Hashtable<?,?> hashtable = (Hashtable<?, ?>) object;
                         handleHashtableFromServer((Hashtable<String, DefaultTableModel>) hashtable);
-
-                        // Looping through the entries of the Hashtable
-                        for (Map.Entry<?, ?> entry : hashtable.entrySet()) {
-                            String key = (String)entry.getKey();
-                            DefaultTableModel value = (DefaultTableModel)entry.getValue();
-
-                            // Now you can use the key and value
-                            System.out.println("Key: " + key);
-
-                            // Looping through the rows of the DefaultTableModel
-                            for (int i = 0; i < value.getRowCount(); i++) {
-                                // Looping through the columns of the DefaultTableModel
-                                for (int j = 0; j < value.getColumnCount(); j++) {
-                                    System.out.print(value.getValueAt(i, j) + " ");
-                                }
-                                System.out.println();
-                            }
-                        }
                     }
 
                 }
@@ -255,13 +236,11 @@ public class Client {
     public void handleHashtableFromServer(Hashtable<String, DefaultTableModel> hashtable) {
         if(hashtable.containsKey("Marketplace Products")){
             mainForm.getProductForm().createTableModel(hashtable.get("Marketplace Products"));
-            System.out.println("test");
         }
 
         if(hashtable.containsKey("My products")){
             mainForm.getProfileForm().createTableModel(hashtable.get("My products"));
             mainForm.setProfilePanel();
-            System.out.println("test");
             mainForm.getProfileForm().setTitle("My Inventory");
 
         }
@@ -299,7 +278,6 @@ public class Client {
      * @param message
      */
     public void handleStringMessagesFromServer(String message){
-        System.out.println("Response from server: " + message);
         switch(message){
             case "loginSuccess":
                 mainForm.setProductPanel();

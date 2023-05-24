@@ -108,7 +108,6 @@ public class ProductProcedures {
             String[] priceSplit = price.split(",");
             int minPrice = Integer.parseInt(priceSplit[0]);
             int maxPrice = Integer.parseInt(priceSplit[1]);
-            System.out.println(minPrice + " " + maxPrice + " min och max pris!!!");
 
             statement.setInt(1, minPrice);
             statement.setInt(2, maxPrice);
@@ -286,14 +285,6 @@ public class ProductProcedures {
 
        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
        hashtable.put("Order History", tableModel);
-
-       //Printing out test
-       for (int i = 0; i < tableModel.getRowCount(); i++) {
-           for (int j = 0; j < tableModel.getColumnCount(); j++) {
-               System.out.print(tableModel.getValueAt(i, j) + " ");
-           }
-           System.out.println();
-       }
         return hashtable;
     }
 

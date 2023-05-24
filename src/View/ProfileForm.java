@@ -213,7 +213,6 @@ public class ProfileForm implements ActionListener {
                     searchByDate.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
-                    System.out.println("requests button pressed");
                     c.accessRequests();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -228,7 +227,6 @@ public class ProfileForm implements ActionListener {
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
                     c.accessOrderHistory();
-                    System.out.println("orderHistory pressed");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -271,7 +269,6 @@ public class ProfileForm implements ActionListener {
         int rowCount = tableModel.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             String value = (String) tableModel.getValueAt(i, 0); // 0 represents the first column index
-            System.out.println("Detta är value: " + value);
             c.requestItemInCart(Integer.valueOf(value));
         }
         c.sendCartRequestToServer();

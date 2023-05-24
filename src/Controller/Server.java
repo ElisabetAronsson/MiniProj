@@ -76,11 +76,9 @@ public class Server {
                                 handleAddCartFromClient(request);
                             }
                             else if(request.getRequestType().equals("declineRequest")){
-                                System.out.println("Declining request for product: " + request.getProduct_id());
                                 handleDeclineBuyReqFromClient(request);
                             }
                             else if(request.getRequestType().equals("acceptRequest")){
-                                System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
                                 handleAcceptBuyReqFromClient(request);
                             }
                             else if(request.getRequestType().equals("searchByType")){
@@ -115,19 +113,15 @@ public class Server {
                                 getAllProductsFromDatabase();
                             }
                         } else if(object instanceof Integer){
-                            System.out.println("hämtar id från server");
                             sendClientUsersProducts((int)object);
                         }
                         else if(object instanceof ServerRequest){
-                            System.out.println("ServerRequest sent from client to server");
                             ServerRequest serverRequest = (ServerRequest) object;
                             if(serverRequest.getRequestType().equals("getOrderHistory")){
-                                System.out.println("Server sending order history to client");
                                 sendClientOrderHistory(serverRequest.getUserID());
                             }
 
                             if(serverRequest.getRequestType().equals("getRequests")){
-                                System.out.println("Server sending requests to client");
                                 sendClientRequests(serverRequest.getUserID());
                             }
                         }
@@ -195,8 +189,6 @@ public class Server {
         String temp = request.getParam();
         startDate = temp.substring(0, temp.indexOf("|"));
         endDate = temp.substring(temp.indexOf("|") + 1, temp.length());
-        System.out.println("START DATE: " + startDate);
-        System.out.println("END DATE: " + endDate);
         Hashtable results = productProcedures.searchByDate(startDate, endDate, userID);
         sendHashtableToClient(results);
     }
@@ -216,7 +208,6 @@ public class Server {
      * @param request The request object holding data
      */
     public void handleAcceptBuyReqFromClient(Request request) throws SQLException, IOException {
-        System.out.println("Accepting request for product: " + request.getProductName() + " being sold to buyer: " + request.getBuyer_id());
         productProcedures.purchaseProd(request.getProduct_id(), request.getProductName(), request.getBuyer_id());
         //Update the client with the new request table from the DB.
         sendClientRequests(request.getUserId());

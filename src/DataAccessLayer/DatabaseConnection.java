@@ -24,7 +24,6 @@ public class DatabaseConnection {
 
         try {
             connection = DriverManager.getConnection(url, props);
-            System.out.println("Connected to the database.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
