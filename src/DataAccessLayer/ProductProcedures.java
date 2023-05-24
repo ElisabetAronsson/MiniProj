@@ -336,11 +336,11 @@ public class ProductProcedures {
 
         return hashtable;
     }
-    public Hashtable searchByDate(String startDate, String endDate) {
+    public Hashtable searchByDate(String startDate, String endDate, int userID) {
         List<Object> list = new ArrayList<>();
         DatabaseConnection databaseConnection = new DatabaseConnection();
         try {
-            CallableStatement statement = databaseConnection.getConnection().prepareCall("Select * from search_by_date(?, ?)");
+            CallableStatement statement = databaseConnection.getConnection().prepareCall("Select * from search_by_date(?, ?, ?)");
 
 
             DefaultTableModel tableModel = new DefaultTableModel();
@@ -353,6 +353,7 @@ public class ProductProcedures {
 
             statement.setString(1, startDate);
             statement.setString(2, endDate);
+            statement.setInt(3, userID);
 
             statement.executeQuery();
 
@@ -361,11 +362,8 @@ public class ProductProcedures {
 
             while (result.next()) {
                 tableModel.insertRow(counter, new Object[]{result.getString(1), result.getString(2)});
-                //counter++;
+                counter++;
             }
-         /*   String productName = result.getString("product_name");
-            list.add(productName);
-            System.out.println("Prod name: " + productName);*/
 
             Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
             hashtable.put("Orders", tableModel);
