@@ -43,8 +43,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * This constructor is used to decline a buy request.
-     * @param product_id The id of the product being declined.
+     * This constructor is used to remove an item from cart and send buy request.
      */
     public Request(int product_id, String requestType, int userId){
         this.product_id = product_id;

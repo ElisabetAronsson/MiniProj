@@ -438,4 +438,34 @@ public class ProductProcedures {
         hashtable.put("My cart", tableModel);
         return hashtable;
     }
+
+    public boolean removeFromCart(int user_id, int product_id) {
+        DatabaseConnection dc = new DatabaseConnection();
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ ? = call removeFromCart(?,?) }")) {
+            statement.registerOutParameter(1, Types.BOOLEAN);
+            statement.setInt(2, user_id);
+            statement.setInt(3, product_id);
+            statement.execute();
+            boolean result = statement.getBoolean(1);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean requestItemFromCart(int userId, int productId) {
+        DatabaseConnection dc = new DatabaseConnection();
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ ? = call requestcartproduct(?,?) }")) {
+            statement.registerOutParameter(1, Types.BOOLEAN);
+            statement.setInt(2, userId);
+            statement.setInt(3, productId);
+            statement.execute();
+            boolean result = statement.getBoolean(1);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

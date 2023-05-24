@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.util.ArrayList;
 
 public class ProfileForm implements ActionListener {
     private JPanel profilePanel;
@@ -118,6 +119,10 @@ public class ProfileForm implements ActionListener {
         searchByDate.setActionCommand("searchByDate");
         myInventoryButton.addActionListener(this);
         myInventoryButton.setActionCommand("myInventory");
+        removeProductFromCart.addActionListener(this);
+        removeProductFromCart.setActionCommand("removeProductFromCart");
+        buyProductsInCart.addActionListener(this);
+        buyProductsInCart.setActionCommand("buyProductsFromCart");
     }
 
     /**
@@ -248,7 +253,48 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+                break;
+            case "removeProductFromCart":
+                removeFromCart();
+                break;
+            case "buyProductsFromCart":
+                try {
+                    requestProductsInCart();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
         }
+    }
+
+    private void requestProductsInCart() throws IOException {
+        ArrayList<Integer> firstColumnValues = new ArrayList<>();
+        int rowCount = tableModel.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            String value = (String) tableModel.getValueAt(i, 0); // 0 represents the first column index
+            System.out.println("Detta är value: " + value);
+            c.requestItemInCart(Integer.valueOf(value));
+        }
+        c.sendCartRequestToServer();
+    }
+
+    private boolean removeFromCart() {
+        String productId = "";
+        try {
+            if(!table.getSelectionModel().isSelectionEmpty()) {
+                productId = (String) tableModel.getValueAt(table.getSelectedRow(), 0);
+                int input = JOptionPane.showOptionDialog(null, "Do you want to remove productId: " +
+                                productId + " from your shoppingcart?", "Remove from cart", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, null, null);
+            } else{
+                JOptionPane.showMessageDialog(null, "Pick an item you want to remove" +
+                        "then proceed to press the remove from cart button");
+                return false;
+            }
+            c.sendRemoveFromCartToServer(Integer.parseInt(productId));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public void searchByDate(){

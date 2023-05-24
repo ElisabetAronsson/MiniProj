@@ -85,7 +85,6 @@ public class Client {
         oos.flush();
     }
     public void searchByDate(String start, String end) throws IOException {
-        System.out.println("Client trying to create a request..");
         Request request = new Request(start, end, "searchByDate", userId);
         oos.writeObject(request);
         oos.flush();
@@ -98,16 +97,27 @@ public class Client {
     }
 
     public void accessOrderHistory() throws IOException {
-        System.out.println("accessorderhistory function called");
         ServerRequest serverRequest = new ServerRequest("getOrderHistory",userId);
         oos.writeObject(serverRequest);
         oos.flush();
     }
 
     public void accessRequests() throws IOException{
-        System.out.println("acessRequests function called");
         ServerRequest serverRequest = new ServerRequest("getRequests",userId);
         oos.writeObject(serverRequest);
+        oos.flush();
+    }
+
+    public void sendRemoveFromCartToServer(int productId) throws IOException {
+        Request request = new Request(productId, "removeFromCart", userId);
+        oos.writeObject(request);
+        oos.flush();
+
+    }
+
+    public void requestItemInCart(int productId) throws IOException {
+        Request request = new Request(productId, "requestItemFromCart", userId);
+        oos.writeObject(request);
         oos.flush();
     }
 
@@ -302,7 +312,6 @@ public class Client {
      */
     public void handleUserIdFromServer(int userId){
         this.userId = userId;
-        System.out.println("The user ID "+userId+" was successfully received from the server and set.");
     }
 
     /**
@@ -324,6 +333,7 @@ public class Client {
     public int getUserId() {
         return userId;
     }
+
 
 
 }

@@ -98,9 +98,16 @@ public class Server {
                             else if(request.getRequestType().equals("showAllProducts")){
                                 getAllProductsFromDatabase();
                             }
-
                             else if(request.getRequestType().equals("viewCart")){
                                 sendCartItemsToClient(request.getUserId());
+                            }
+                            else if(request.getRequestType().equals("removeFromCart")){
+                                if(productProcedures.removeFromCart(request.getUserId(), request.getProduct_id())) {
+                                    sendCartItemsToClient(request.getUserId());
+                                }
+                            }
+                            else if(request.getRequestType().equals("requestItemFromCart")){
+                                productProcedures.requestItemFromCart(request.getUserId(), request.getProduct_id());
                             }
                         }
                         else if (object instanceof String){
@@ -123,7 +130,6 @@ public class Server {
                                 System.out.println("Server sending requests to client");
                                 sendClientRequests(serverRequest.getUserID());
                             }
-
                         }
                     }
                 } catch (IOException e) {
