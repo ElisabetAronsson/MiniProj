@@ -13,6 +13,16 @@ public class Request implements Serializable {
 
     private int userId;
 
+
+    public Request(int userId, String requestType){
+        this.userId = userId;
+        this.requestType = requestType;
+    }
+    /**
+     * Adding to shoppingcart
+     * @param buyer_id
+     * @param product_id
+     */
     public Request(int buyer_id, int product_id) {
         this.buyer_id = buyer_id;
         this.product_id = product_id;

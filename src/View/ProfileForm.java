@@ -28,6 +28,10 @@ public class ProfileForm implements ActionListener {
 
     private JButton myInventoryButton;
 
+    private JButton removeProductFromCart;
+    private JButton buyProductsInCart;
+
+
 
     public ProfileForm(Client c) {
         this.c = c;
@@ -39,10 +43,14 @@ public class ProfileForm implements ActionListener {
         searchByDate = new JButton("Search by date");
         title = new JLabel("My Inventory");
         myInventoryButton = new JButton("My Inventory");
+        removeProductFromCart = new JButton("Remove Product");
+        buyProductsInCart = new JButton("Buy Products");
 
         acceptRequestButton.setVisible(false);
         declineRequestButton.setVisible(false);
         searchByDate.setVisible(false);
+        removeProductFromCart.setVisible(false);
+        buyProductsInCart.setVisible(false);
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -56,19 +64,22 @@ public class ProfileForm implements ActionListener {
         profilePanel.add(searchByDate);
         profilePanel.add(title);
         profilePanel.add(myInventoryButton);
+        profilePanel.add(removeProductFromCart);
+        profilePanel.add(buyProductsInCart);
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
         declineRequestButton.setBounds(550, 500, 120, 25);
+        removeProductFromCart.setBounds(750, 500, 120, 25);
+        buyProductsInCart.setBounds(550, 500, 120, 25);
 
         searchByDate.setBounds(750, 500, 120, 25);
         myInventoryButton.setBounds(240,450,120,25);
 
         title.setBounds((944/2)-90, 20, 180,40);
         title.setFont(new Font("Serif", Font.PLAIN, 30));
-
 
         addListeners();
     }
@@ -178,10 +189,11 @@ public class ProfileForm implements ActionListener {
         switch (action){
             case "marketplace":
                 try {
-                    title.setText("My Inventory");
                     searchByDate.setVisible(false);
                     acceptRequestButton.setVisible(false);
                     declineRequestButton.setVisible(false);
+                    removeProductFromCart.setVisible(false);
+                    buyProductsInCart.setVisible(false);
                     showAllProducts();
                     returnToMarket();
                     c.getMainForm().setProductPanel();
@@ -194,7 +206,8 @@ public class ProfileForm implements ActionListener {
                     acceptRequestButton.setVisible(true);
                     declineRequestButton.setVisible(true);
                     searchByDate.setVisible(false);
-                    title.setText("Requests");
+                    removeProductFromCart.setVisible(false);
+                    buyProductsInCart.setVisible(false);
                     System.out.println("requests button pressed");
                     c.accessRequests();
                 } catch (IOException ex) {
@@ -204,10 +217,11 @@ public class ProfileForm implements ActionListener {
                 break;
             case "orderHistory":
                 try {
-                    title.setText("Order History");
                     searchByDate.setVisible(true);
                     acceptRequestButton.setVisible(false);
                     declineRequestButton.setVisible(false);
+                    removeProductFromCart.setVisible(false);
+                    buyProductsInCart.setVisible(false);
                     c.accessOrderHistory();
                     System.out.println("orderHistory pressed");
                 } catch (IOException ex) {
@@ -225,10 +239,11 @@ public class ProfileForm implements ActionListener {
                 break;
             case "myInventory":
                 try {
-                    title.setText("My Inventory");
                     searchByDate.setVisible(false);
                     acceptRequestButton.setVisible(false);
                     declineRequestButton.setVisible(false);
+                    removeProductFromCart.setVisible(false);
+                    buyProductsInCart.setVisible(false);
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -246,5 +261,14 @@ public class ProfileForm implements ActionListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setTitle(String name) {
+        title.setText(name);
+    }
+
+    public void cartButtons() {
+        removeProductFromCart.setVisible(true);
+        buyProductsInCart.setVisible(true);
     }
 }

@@ -73,7 +73,7 @@ public class Server {
                         else if (object instanceof Request){
                             Request request = (Request) object;
                             if(request.getRequestType() == null){
-                                handleBuyReqFromClient(request);
+                                handleAddCartFromClient(request);
                             }
                             else if(request.getRequestType().equals("declineRequest")){
                                 System.out.println("Declining request for product: " + request.getProduct_id());
@@ -99,6 +99,9 @@ public class Server {
                                 getAllProductsFromDatabase();
                             }
 
+                            else if(request.getRequestType().equals("viewCart")){
+                                sendCartItemsToClient(request.getUserId());
+                            }
                         }
                         else if (object instanceof String){
                             if (object == "marketplace") {
@@ -134,10 +137,13 @@ public class Server {
         }
     }
 
+    private void sendCartItemsToClient(int userId) throws SQLException, IOException {
+        oos.writeObject(productProcedures.getUserShoppingcart(userId));
+        oos.flush();
+    }
+
     private void sendClientUsersProducts(int userId) throws IOException, SQLException {
         oos.writeObject(productProcedures.getUsersProducts(userId));
-        System.out.println("Contains message server: " + productProcedures.
-                getUsersProducts(userId).containsKey("My Products"));
         oos.flush();
     }
 
@@ -155,8 +161,8 @@ public class Server {
      * Handles buy requests from the client
      * @param request
      */
-    private boolean handleBuyReqFromClient(Request request) {
-        return productProcedures.buyReq(request.getBuyer_id(), request.getProduct_id());
+    private boolean handleAddCartFromClient(Request request) {
+        return productProcedures.addToShoppingCart(request.getBuyer_id(), request.getProduct_id());
     }
 
     /**
@@ -270,7 +276,6 @@ public class Server {
         //Send the DefaultTableModel holding the data to the client.
         sendHashtableToClient(hashtable);
     }
-
 
     /**
      * This function sends a hashtable to the client from the server.

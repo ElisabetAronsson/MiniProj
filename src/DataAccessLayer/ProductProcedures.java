@@ -398,24 +398,9 @@ public class ProductProcedures {
                     res.getString(4), res.getString(5), res.getString(6), res.getString(7)});
             counter++;
         }
-
-
-
         Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
         hashtable.put("My products", tableModel);
-
-
-        int rowCount = tableModel.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < tableModel.getColumnCount(); j++) {
-                System.out.print(tableModel.getValueAt(i, j) + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("Metoden fungerar");
-        System.out.println("DB metod innehåller My products: " + hashtable.containsKey("My products"));
         return hashtable;
-
     }
 
     public boolean registerNewProd(Product product) { //Skicka ut till alla online users att products är uppdaterad
@@ -429,5 +414,45 @@ public class ProductProcedures {
         return null;
     }
 
+    public boolean addToShoppingCart(int user_id, int product_id) {
+        DatabaseConnection dc = new DatabaseConnection();
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ ? = call addToCart(?,?) }")) {
+            statement.registerOutParameter(1, Types.BOOLEAN);
+            statement.setInt(2, user_id);
+            statement.setInt(3, product_id);
+            statement.execute();
+            boolean result = statement.getBoolean(1);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    public Object getUserShoppingcart(int user_id) throws SQLException {
+        List<Object> list = new ArrayList<>();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_my_cart(?)");
+        statement.setInt(1, user_id);
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        String[] columnNames = {"Product_id", "Seller_id", "Type", "Price", "Year_Of_Production", "Color", "Condition"};
+        //Add the column names to the table model
+        for (int i = 0; i < columnNames.length; i++) {
+            tableModel.addColumn(columnNames[i]);
+        }
+        int counter = 0;
+
+        statement.executeQuery();
+        ResultSet res = statement.getResultSet();
+        while (res.next()) {
+            //Add the data to the table model
+            tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                    res.getString(4), res.getString(5), res.getString(6), res.getString(7)});
+            counter++;
+        }
+        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
+        hashtable.put("My cart", tableModel);
+        return hashtable;
+    }
 }

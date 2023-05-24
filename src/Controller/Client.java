@@ -174,6 +174,12 @@ public class Client {
         oos.flush();
     }
 
+    public void sendCartRequestToServer() throws IOException {
+        Request request = new Request(this.userId, "viewCart");
+        oos.writeObject(request);
+        oos.flush();
+    }
+
     /**
      * Reads a message that was received from the server.
      */
@@ -246,17 +252,28 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("My products"));
             mainForm.setProfilePanel();
             System.out.println("test");
+            mainForm.getProfileForm().setTitle("My Inventory");
+
         }
 
         if(hashtable.containsKey("Order History")){
             mainForm.getProfileForm().createTableModel(hashtable.get("Order History"));
             mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Order History");
         }
 
         if(hashtable.containsKey("Buy Requests")){
-            System.out.println("test");
             mainForm.getProfileForm().createTableModel(hashtable.get("Buy Requests"));
             mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Requests");
+        }
+
+        if(hashtable.containsKey("My cart")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("My cart"));
+            mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Shopping Cart");
+            mainForm.getProfileForm().cartButtons();
+
         }
     }
 
@@ -306,4 +323,6 @@ public class Client {
     public int getUserId() {
         return userId;
     }
+
+
 }
