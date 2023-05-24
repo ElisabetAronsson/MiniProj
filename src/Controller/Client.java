@@ -273,6 +273,7 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("My cart"));
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("Shopping Cart");
+            mainForm.getProfileForm().cartButtons();
 
         }
     }

@@ -33,7 +33,7 @@ public class Server {
      * @throws IOException
      */
     public void startServer() throws IOException {
-        serverSocket = new ServerSocket(8080);
+        serverSocket = new ServerSocket(8888);
         System.out.println("Server started on port 8080");
         userProcedures = new UserProcedures();
         productProcedures = new ProductProcedures();
