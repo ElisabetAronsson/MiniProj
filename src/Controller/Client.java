@@ -45,7 +45,7 @@ public class Client {
      * @throws IOException
      */
     public void connectToServer() throws IOException {
-        socket = new Socket("localhost", 8080);
+        socket = new Socket("localhost", 8888);
         //Outputstream to send objects to the server.
         oos = new ObjectOutputStream(socket.getOutputStream());
     }

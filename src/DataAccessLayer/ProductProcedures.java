@@ -105,7 +105,13 @@ public class ProductProcedures {
             }
             int counter = 0;
 
-            statement.setInt(1, Integer.parseInt(price));
+            String[] priceSplit = price.split(",");
+            int minPrice = Integer.parseInt(priceSplit[0]);
+            int maxPrice = Integer.parseInt(priceSplit[1]);
+
+            statement.setInt(1, minPrice);
+            statement.setInt(2, maxPrice);
+
             statement.executeQuery();
             ResultSet res = statement.getResultSet();
             while (res.next()) {

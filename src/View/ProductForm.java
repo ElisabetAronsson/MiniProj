@@ -162,7 +162,11 @@ public class ProductForm implements ActionListener {
      * @throws IOException
      */
     public void searchByPrice() throws IOException {
-        String price=JOptionPane.showInputDialog(null,"Enter the products price");
+        String minPrice =JOptionPane.showInputDialog(null,"Enter the products min price");
+        String maxPrice=JOptionPane.showInputDialog(null,"Enter the products max price");
+
+        String price = minPrice+","+maxPrice;
+
         c.sendSearchByPriceToServer(price);
     };
 
