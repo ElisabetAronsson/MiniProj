@@ -178,6 +178,10 @@ public class ProfileForm implements ActionListener {
         switch (action){
             case "marketplace":
                 try {
+                    title.setText("My Inventory");
+                    searchByDate.setVisible(false);
+                    acceptRequestButton.setVisible(false);
+                    declineRequestButton.setVisible(false);
                     showAllProducts();
                     returnToMarket();
                     c.getMainForm().setProductPanel();
