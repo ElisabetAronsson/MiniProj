@@ -23,6 +23,10 @@ public class ProductForm implements ActionListener {
     private JButton searchByPriceButton;
     private JButton searchByConditionButton;
 
+    private JButton showAllProductsButton;
+
+    private JLabel title;
+
     public ProductForm(Client c) {
         //Apply passed client variable to the local one.
         this.c = c;
@@ -34,6 +38,9 @@ public class ProductForm implements ActionListener {
         searchByTypeButton = new JButton("Search By Type");
         searchByPriceButton = new JButton("Search By Price");
         searchByConditionButton = new JButton("Search By Condition");
+        showAllProductsButton = new JButton("Show All Products");
+
+        title = new JLabel("Marketplace");
 
 
         //adjust size and set layout
@@ -48,6 +55,8 @@ public class ProductForm implements ActionListener {
         productPanel.add (searchByTypeButton);
         productPanel.add (searchByPriceButton);
         productPanel.add (searchByConditionButton);
+        productPanel.add(showAllProductsButton);
+        productPanel.add(title);
 
         //set component bounds (only needed by Absolute Positioning)
         addProductButton.setBounds (100, 450, 120, 25);
@@ -56,7 +65,10 @@ public class ProductForm implements ActionListener {
         searchByTypeButton.setBounds (100, 500, 120, 25);
         searchByPriceButton.setBounds (420, 500, 120, 25);
         searchByConditionButton.setBounds (250, 500, 150,25);
+        showAllProductsButton.setBounds(560,500,120,25);
 
+        title.setBounds((944/2)-75, 20, 150,40);
+        title.setFont(new Font("Serif", Font.PLAIN, 30));
 
         //Add listeners to buttons
         addListeners();
@@ -107,6 +119,9 @@ public class ProductForm implements ActionListener {
 
         searchByPriceButton.addActionListener(this);
         searchByPriceButton.setActionCommand("searchPrice");
+
+        showAllProductsButton.addActionListener(this);
+        showAllProductsButton.setActionCommand("showAllProducts");
 
 
     }
@@ -179,6 +194,10 @@ public class ProductForm implements ActionListener {
         c.sendSearchByConditionToServer(condition);
     };
 
+    public void showAllProducts() throws IOException{
+        c.sendShowAllProductsToServer();
+    }
+
     /**
      * Returns the product panel.
      * @return productPanel
@@ -199,7 +218,7 @@ public class ProductForm implements ActionListener {
                 break;
             case "visitProfile":
                 try {
-                    System.out.println("what");
+
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -226,6 +245,12 @@ public class ProductForm implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 break;
+            case "showAllProducts":
+                try{
+                    showAllProducts();
+                }catch (IOException ex){
+                    throw new RuntimeException(ex);
+                }
 
         }
 

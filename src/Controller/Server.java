@@ -95,6 +95,9 @@ public class Server {
                             else if(request.getRequestType().equals("searchByDate")){
                                 sendSearchByDateToClient(request);
                             }
+                            else if(request.getRequestType().equals("showAllProducts")){
+                                getAllProductsFromDatabase();
+                            }
 
                         }
                         else if (object instanceof String){
