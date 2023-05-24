@@ -389,7 +389,7 @@ public class ProductProcedures {
         statement.setInt(1, user_id);
 
         DefaultTableModel tableModel = new DefaultTableModel();
-        String[] columnNames = {"Product_id, Seller_id, Type, Price, Year_Of_Production, Color, Condition"};
+        String[] columnNames = {"Product_id", "Seller_id", "Type", "Price", "Year_Of_Production", "Color", "Condition"};
         //Add the column names to the table model
         for (int i = 0; i < columnNames.length; i++) {
             tableModel.addColumn(columnNames[i]);

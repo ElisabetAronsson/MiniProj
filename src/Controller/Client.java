@@ -141,7 +141,6 @@ public class Client {
     public void sendUserIdToServerProfile(int userId) throws IOException {
         oos.writeObject(userId);
         oos.flush();
-        System.out.println("Skickar id från klient");
     }
 
     public void sendSearchByTypeToServer(String type) throws IOException {
@@ -253,7 +252,8 @@ public class Client {
         }
 
         if(hashtable.containsKey("My cart")){
-            System.out.println("Kolla här...");
+            mainForm.getProfileForm().createTableModel(hashtable.get("My cart"));
+            mainForm.setProfilePanel();
         }
     }
 

@@ -137,8 +137,6 @@ public class Server {
 
     private void sendClientUsersProducts(int userId) throws IOException, SQLException {
         oos.writeObject(productProcedures.getUsersProducts(userId));
-        System.out.println("Contains message server: " + productProcedures.
-                getUsersProducts(userId).containsKey("My Products"));
         oos.flush();
     }
 
