@@ -95,7 +95,7 @@ public class ProductProcedures {
      */
     public Hashtable getProductsByPrice(String price){
         DatabaseConnection dc = new DatabaseConnection();
-        try (CallableStatement statement = dc.getConnection().prepareCall("{ call get_products_by_price(?) }")) {
+        try (CallableStatement statement = dc.getConnection().prepareCall("{ call get_products_by_price(?,?) }")) {
             //Create the table model
             DefaultTableModel tableModel = new DefaultTableModel();
             String[] columnNames = {"ProductID", "SellerID", "Type", "Price", "Production Year", "Color", "Condition"};
@@ -108,6 +108,7 @@ public class ProductProcedures {
             String[] priceSplit = price.split(",");
             int minPrice = Integer.parseInt(priceSplit[0]);
             int maxPrice = Integer.parseInt(priceSplit[1]);
+            System.out.println(minPrice + " " + maxPrice + " min och max pris!!!");
 
             statement.setInt(1, minPrice);
             statement.setInt(2, maxPrice);
