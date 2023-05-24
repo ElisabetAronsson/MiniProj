@@ -279,7 +279,6 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("Orders"));
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("Orders by date");
-            mainForm.getProfileForm().cartButtons();
         }
     }
 
