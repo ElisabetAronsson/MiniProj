@@ -166,7 +166,7 @@ public class MarketplaceForm implements ActionListener {
                 return false;
             }
 
-            c.sendRequesttoServer(Integer.parseInt(productId));
+            c.sendRequestToServer(Integer.parseInt(productId));
         } catch (IOException e) {
             e.printStackTrace();
         }

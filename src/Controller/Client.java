@@ -6,7 +6,6 @@ import View.MainForm;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
-import java.sql.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -121,7 +120,7 @@ public class Client {
         oos.flush();
     }
 
-    public void sendRequesttoServer( int productId) throws IOException {
+    public void sendRequestToServer(int productId) throws IOException {
         Request request = new Request(this.userId, productId);
         oos.writeObject(request);
         oos.flush();
@@ -286,6 +285,11 @@ public class Client {
             mainForm.getProfileForm().cartButtons();
 
         }
+        if(hashtable.containsKey("Orders")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("Orders"));
+            mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Orders by date");
+        }
     }
 
 
@@ -333,7 +337,6 @@ public class Client {
     public int getUserId() {
         return userId;
     }
-
 
 
 }

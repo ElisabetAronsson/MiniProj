@@ -93,7 +93,7 @@ public class Server {
                                 sendSearchByConditionToClient(request);
                             }
                             else if(request.getRequestType().equals("searchByDate")){
-                                sendSearchByDateToClient(request);
+                                sendSearchByDateToClient(request, request.getUserId());
                             }
                             else if(request.getRequestType().equals("showAllProducts")){
                                 getAllProductsFromDatabase();
@@ -190,17 +190,15 @@ public class Server {
         oos.writeObject(results);
         oos.flush();
     }
-    public void sendSearchByDateToClient(Request request) throws IOException {
+    public void sendSearchByDateToClient(Request request, int userID) throws IOException {
         String startDate, endDate;
         String temp = request.getParam();
         startDate = temp.substring(0, temp.indexOf("|"));
         endDate = temp.substring(temp.indexOf("|") + 1, temp.length());
         System.out.println("START DATE: " + startDate);
         System.out.println("END DATE: " + endDate);
-        Hashtable results = productProcedures.searchByDate(startDate, endDate);
-        //oos.writeObject(results);
-        //oos.flush();
-
+        Hashtable results = productProcedures.searchByDate(startDate, endDate, userID);
+        sendHashtableToClient(results);
     }
 
     /**
