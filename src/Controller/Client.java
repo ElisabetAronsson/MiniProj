@@ -169,6 +169,12 @@ public class Client {
         oos.flush();
     }
 
+    public void sendShowAllProductsToServer() throws IOException{
+        Request request = new Request("","showAllProducts", userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
+
     /**
      * Reads a message that was received from the server.
      */

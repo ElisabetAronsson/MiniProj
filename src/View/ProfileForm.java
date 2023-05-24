@@ -24,6 +24,9 @@ public class ProfileForm implements ActionListener {
     private JButton acceptRequestButton;
     private JButton declineRequestButton;
 
+    private JLabel title;
+
+    private JButton myInventoryButton;
 
 
     public ProfileForm(Client c) {
@@ -34,6 +37,12 @@ public class ProfileForm implements ActionListener {
         acceptRequestButton = new JButton("Accept Request");
         declineRequestButton = new JButton("Decline Request");
         searchByDate = new JButton("Search by date");
+        title = new JLabel("My Inventory");
+        myInventoryButton = new JButton("My Inventory");
+
+        acceptRequestButton.setVisible(false);
+        declineRequestButton.setVisible(false);
+        searchByDate.setVisible(false);
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -45,13 +54,19 @@ public class ProfileForm implements ActionListener {
         profilePanel.add (acceptRequestButton);
         profilePanel.add (declineRequestButton);
         profilePanel.add(searchByDate);
+        profilePanel.add(title);
+        profilePanel.add(myInventoryButton);
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
         declineRequestButton.setBounds(550, 500, 120, 25);
-        searchByDate.setBounds(350, 450, 120, 25);
+        searchByDate.setBounds(750, 500, 120, 25);
+        myInventoryButton.setBounds(240,450,120,25);
+
+        title.setBounds((944/2)-90, 20, 180,40);
+        title.setFont(new Font("Serif", Font.PLAIN, 30));
 
         addListeners();
     }
@@ -88,6 +103,8 @@ public class ProfileForm implements ActionListener {
         declineRequestButton.setActionCommand("declineRequest");
         searchByDate.addActionListener(this);
         searchByDate.setActionCommand("searchByDate");
+        myInventoryButton.addActionListener(this);
+        myInventoryButton.setActionCommand("myInventory");
     }
 
     /**
@@ -140,6 +157,10 @@ public class ProfileForm implements ActionListener {
         }
     }
 
+    public void showAllProducts() throws IOException{
+        c.sendShowAllProductsToServer();
+    }
+
 
     private void returnToMarket() throws IOException {
         c.accessMarketplace();
@@ -155,6 +176,7 @@ public class ProfileForm implements ActionListener {
         switch (action){
             case "marketplace":
                 try {
+                    showAllProducts();
                     returnToMarket();
                     c.getMainForm().setProductPanel();
                 } catch (IOException ex) {
@@ -163,6 +185,10 @@ public class ProfileForm implements ActionListener {
                 break;
             case "requests":
                 try {
+                    acceptRequestButton.setVisible(true);
+                    declineRequestButton.setVisible(true);
+                    searchByDate.setVisible(false);
+                    title.setText("Requests");
                     System.out.println("requests button pressed");
                     c.accessRequests();
                 } catch (IOException ex) {
@@ -172,6 +198,10 @@ public class ProfileForm implements ActionListener {
                 break;
             case "orderHistory":
                 try {
+                    title.setText("Order History");
+                    searchByDate.setVisible(true);
+                    acceptRequestButton.setVisible(false);
+                    declineRequestButton.setVisible(false);
                     c.accessOrderHistory();
                     System.out.println("orderHistory pressed");
                 } catch (IOException ex) {
@@ -187,8 +217,19 @@ public class ProfileForm implements ActionListener {
             case "searchByDate":
                 searchByDate();
                 break;
+            case "myInventory":
+                try {
+                    title.setText("My Inventory");
+                    searchByDate.setVisible(false);
+                    acceptRequestButton.setVisible(false);
+                    declineRequestButton.setVisible(false);
+                    c.sendUserIdToServerProfile(c.getUserId());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
         }
     }
+
     public void searchByDate(){
         String start, end;
         start = JOptionPane.showInputDialog( "Enter a start date for search. (Format: YYYY-MM-DD)");
