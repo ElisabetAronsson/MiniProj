@@ -51,7 +51,7 @@ public class ProfileForm implements ActionListener {
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
         declineRequestButton.setBounds(550, 500, 120, 25);
-        searchByDate.setBounds(350, 450, 120, 25);
+        searchByDate.setBounds(350, 500, 120, 25);
 
         addListeners();
     }
