@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
 
 public class ProfileForm implements ActionListener {
     private JPanel profilePanel;
@@ -18,6 +20,7 @@ public class ProfileForm implements ActionListener {
     private DefaultTableModel tableModel;
     private JButton myRequests;
     private JButton orderHistory;
+    private JButton searchByDate;
     private JButton acceptRequestButton;
     private JButton declineRequestButton;
 
@@ -30,6 +33,7 @@ public class ProfileForm implements ActionListener {
         orderHistory = new JButton("Order History");
         acceptRequestButton = new JButton("Accept Request");
         declineRequestButton = new JButton("Decline Request");
+        searchByDate = new JButton("Search by date");
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -40,12 +44,14 @@ public class ProfileForm implements ActionListener {
         profilePanel.add (orderHistory);
         profilePanel.add (acceptRequestButton);
         profilePanel.add (declineRequestButton);
+        profilePanel.add(searchByDate);
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
         declineRequestButton.setBounds(550, 500, 120, 25);
+        searchByDate.setBounds(350, 450, 120, 25);
 
         addListeners();
     }
@@ -80,6 +86,8 @@ public class ProfileForm implements ActionListener {
         acceptRequestButton.setActionCommand("acceptRequest");
         declineRequestButton.addActionListener(this);
         declineRequestButton.setActionCommand("declineRequest");
+        searchByDate.addActionListener(this);
+        searchByDate.setActionCommand("searchByDate");
     }
 
     /**
@@ -132,6 +140,7 @@ public class ProfileForm implements ActionListener {
         }
     }
 
+
     private void returnToMarket() throws IOException {
         c.accessMarketplace();
     }
@@ -175,6 +184,20 @@ public class ProfileForm implements ActionListener {
             case "declineRequest":
                 declineRequest();
                 break;
+            case "searchByDate":
+                searchByDate();
+                break;
+        }
+    }
+    public void searchByDate(){
+        String start, end;
+        start = JOptionPane.showInputDialog( "Enter a start date for search. (Format: YYYY-MM-DD)");
+        end = JOptionPane.showInputDialog( "Enter an end date for search. (Format: YYYY-MM-DD)");
+
+        try {
+            c.searchByDate(start, end);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

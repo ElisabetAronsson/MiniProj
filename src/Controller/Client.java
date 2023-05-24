@@ -6,6 +6,7 @@ import View.MainForm;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
+import java.sql.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -81,6 +82,12 @@ public class Client {
     public void sendUserToServerLogin(String username, String password) throws IOException {
         User user = new User(username, password, true);
         oos.writeObject(user);
+        oos.flush();
+    }
+    public void searchByDate(String start, String end) throws IOException {
+        System.out.println("Client trying to create a request..");
+        Request request = new Request(start, end, "searchByDate", userId);
+        oos.writeObject(request);
         oos.flush();
     }
 

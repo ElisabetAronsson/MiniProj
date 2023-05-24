@@ -92,6 +92,10 @@ public class Server {
                             else if(request.getRequestType().equals("searchByCondition")){
                                 sendSearchByConditionToClient(request);
                             }
+                            else if(request.getRequestType().equals("searchByDate")){
+                                sendSearchByDateToClient(request);
+                            }
+
                         }
                         else if (object instanceof String){
                             if (object == "marketplace") {
@@ -170,6 +174,18 @@ public class Server {
         Hashtable results = productProcedures.getProductsByPrice(request.getParam());
         oos.writeObject(results);
         oos.flush();
+    }
+    public void sendSearchByDateToClient(Request request) throws IOException {
+        String startDate, endDate;
+        String temp = request.getParam();
+        startDate = temp.substring(0, temp.indexOf("|"));
+        endDate = temp.substring(temp.indexOf("|") + 1, temp.length());
+        System.out.println("START DATE: " + startDate);
+        System.out.println("END DATE: " + endDate);
+        Hashtable results = productProcedures.searchByDate(startDate, endDate);
+        //oos.writeObject(results);
+        //oos.flush();
+
     }
 
     /**
@@ -251,6 +267,7 @@ public class Server {
         //Send the DefaultTableModel holding the data to the client.
         sendHashtableToClient(hashtable);
     }
+
 
     /**
      * This function sends a hashtable to the client from the server.

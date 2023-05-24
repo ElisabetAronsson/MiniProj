@@ -4,6 +4,7 @@ import Model.Product;
 import Model.User;
 
 import javax.swing.table.DefaultTableModel;
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -328,6 +329,28 @@ public class ProductProcedures {
 
         return hashtable;
     }
+    public Hashtable searchByDate(String startDate, String endDate) {
+        List<Object> list = new ArrayList<>();
+        try {
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            CallableStatement statement = databaseConnection.getConnection().prepareCall("Select * from search_by_date(?, ?)");
+            statement.setString(1, startDate);
+            statement.setString(2, endDate);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()){
+                String productName = result.getString("product_name");
+                list.add(productName);
+                System.out.println("Prod name: " + productName);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
 
     public Hashtable getUsersProducts(int user_id) throws SQLException {
         List<Object> list = new ArrayList<>();
@@ -381,5 +404,6 @@ public class ProductProcedures {
         // om earliestDate är null så hämtas alla
         return null;
     }
+
 
 }

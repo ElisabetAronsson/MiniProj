@@ -55,6 +55,18 @@ public class Request implements Serializable {
         this.userId = userId;
     }
 
+    /**
+     * This constructor is used to send a date search to the server
+     * @param startDate -
+     * @param endDate
+     * @param requestType
+     */
+    public Request(String startDate, String endDate, String requestType, int userId){
+        this.param = startDate + "|" + endDate;
+        this.requestType = requestType;
+        this.userId = userId;
+    }
+
     public int getBuyer_id() {
         return buyer_id;
     }
