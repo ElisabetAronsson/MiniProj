@@ -17,7 +17,7 @@ public class MainForm {
     private Client c;
     private LoginForm loginForm;
     private RegisterForm registerForm;
-    private ProductForm productForm;
+    private MarketplaceForm productForm;
     private ProfileForm profileForm;
 
     /**
@@ -37,7 +37,7 @@ public class MainForm {
         //Create the applications forms and pass the client object to them.
         loginForm = new LoginForm(c);
         registerForm = new RegisterForm(c);
-        productForm = new ProductForm(c);
+        productForm = new MarketplaceForm(c);
         profileForm = new ProfileForm(c);
 
         //Set the login panel.
@@ -85,7 +85,7 @@ public class MainForm {
      * Returns the product panel/form.
      * @return product panel/forum
      */
-    public ProductForm getProductForm(){
+    public MarketplaceForm getProductForm(){
         return this.productForm;
     }
 

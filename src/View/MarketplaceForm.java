@@ -2,6 +2,7 @@ package View;
 
 
 import Controller.Client;
+import Model.Request;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,11 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class ProductForm implements ActionListener {
+public class MarketplaceForm implements ActionListener {
     private JPanel productPanel;
     private JButton addProductButton;
     private JButton profileButton;
-    private JButton purchaseButton;
+    private JButton cartButton;
+    private JButton viewCartButton;
     private JTable table;
     private Client c;
     private JScrollPane scrollPane;
@@ -23,17 +25,19 @@ public class ProductForm implements ActionListener {
     private JButton searchByPriceButton;
     private JButton searchByConditionButton;
 
-    public ProductForm(Client c) {
+    public MarketplaceForm(Client c) {
         //Apply passed client variable to the local one.
         this.c = c;
 
         //construct components
         addProductButton = new JButton("Add Product");
-        purchaseButton = new JButton("Buy Product");
+        cartButton = new JButton("Add to cart");
         profileButton = new JButton ("My Inventory");
         searchByTypeButton = new JButton("Search By Type");
         searchByPriceButton = new JButton("Search By Price");
         searchByConditionButton = new JButton("Search By Condition");
+        viewCartButton = new JButton("View cart");
+
 
 
         //adjust size and set layout
@@ -43,16 +47,18 @@ public class ProductForm implements ActionListener {
 
         //add components
         productPanel.add (addProductButton);
-        productPanel.add (purchaseButton);
+        productPanel.add (cartButton);
         productPanel.add (profileButton);
         productPanel.add (searchByTypeButton);
         productPanel.add (searchByPriceButton);
         productPanel.add (searchByConditionButton);
+        productPanel.add (viewCartButton);
 
         //set component bounds (only needed by Absolute Positioning)
         addProductButton.setBounds (100, 450, 120, 25);
-        purchaseButton.setBounds (250, 450, 120,25);
+        cartButton.setBounds (250, 450, 120,25);
         profileButton.setBounds (700, 450, 120, 25);
+        viewCartButton.setBounds(700, 500, 120, 25);
         searchByTypeButton.setBounds (100, 500, 120, 25);
         searchByPriceButton.setBounds (420, 500, 120, 25);
         searchByConditionButton.setBounds (250, 500, 150,25);
@@ -93,8 +99,8 @@ public class ProductForm implements ActionListener {
         addProductButton.addActionListener(this);
         addProductButton.setActionCommand("addProduct");
 
-        purchaseButton.addActionListener(this);
-        purchaseButton.setActionCommand("buyProduct");
+        cartButton.addActionListener(this);
+        cartButton.setActionCommand("addToCart");
 
         profileButton.addActionListener(this);
         profileButton.setActionCommand("visitProfile");
@@ -107,6 +113,9 @@ public class ProductForm implements ActionListener {
 
         searchByPriceButton.addActionListener(this);
         searchByPriceButton.setActionCommand("searchPrice");
+
+        viewCartButton.addActionListener(this);
+        viewCartButton.setActionCommand("viewCart");
 
 
     }
@@ -127,17 +136,17 @@ public class ProductForm implements ActionListener {
         }
     }
 
-    public boolean buyProduct(){
+    public boolean addToCart(){
         String productId = "";
         try {
             if(!table.getSelectionModel().isSelectionEmpty()) {
                 productId = (String) tableModel.getValueAt(table.getSelectedRow(), 0);
-                int input = JOptionPane.showOptionDialog(null, "Do you want to buy productId: " +
-                                productId, "Purchase confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                int input = JOptionPane.showOptionDialog(null, "Do you want to add productId: " +
+                                productId + " to your shoppingcart?", "Add to cart", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
                         null, null, null);
             } else{
-                JOptionPane.showMessageDialog(null, "Pick an item you want to purchase" +
-                        "then proceed to press the purchase button");
+                JOptionPane.showMessageDialog(null, "Pick an item you want to add" +
+                        "then proceed to press the add to cart button");
                 return false;
             }
 
@@ -190,12 +199,11 @@ public class ProductForm implements ActionListener {
             case "addProduct":
                 addProduct();
                 break;
-            case "buyProduct":
-                buyProduct();
+            case "addToCart":
+                addToCart();
                 break;
             case "visitProfile":
                 try {
-                    System.out.println("what");
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -222,7 +230,13 @@ public class ProductForm implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 break;
-
+            case "viewCart":
+                try {
+                    c.sendCartRequestToServer();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
         }
 
     }

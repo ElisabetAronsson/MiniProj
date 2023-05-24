@@ -162,6 +162,12 @@ public class Client {
         oos.flush();
     }
 
+    public void sendCartRequestToServer() throws IOException {
+        Request request = new Request(this.userId, "viewCart");
+        oos.writeObject(request);
+        oos.flush();
+    }
+
     /**
      * Reads a message that was received from the server.
      */
@@ -242,9 +248,12 @@ public class Client {
         }
 
         if(hashtable.containsKey("Buy Requests")){
-            System.out.println("test");
             mainForm.getProfileForm().createTableModel(hashtable.get("Buy Requests"));
             mainForm.setProfilePanel();
+        }
+
+        if(hashtable.containsKey("My cart")){
+            System.out.println("Kolla här...");
         }
     }
 
@@ -294,4 +303,6 @@ public class Client {
     public int getUserId() {
         return userId;
     }
+
+
 }
