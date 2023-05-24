@@ -275,6 +275,12 @@ public class Client {
             mainForm.getProfileForm().cartButtons();
 
         }
+        if(hashtable.containsKey("Orders")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("Orders"));
+            mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Orders by date");
+            mainForm.getProfileForm().cartButtons();
+        }
     }
 
 
