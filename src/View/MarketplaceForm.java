@@ -24,13 +24,13 @@ public class MarketplaceForm implements ActionListener {
     private JButton searchByTypeButton;
     private JButton searchByPriceButton;
     private JButton searchByConditionButton;
-
-    public MarketplaceForm(Client c) {
     private JButton showAllProductsButton;
 
     private JLabel title;
 
-    public ProductForm(Client c) {
+    public MarketplaceForm(Client c) {
+
+
         //Apply passed client variable to the local one.
         this.c = c;
 
