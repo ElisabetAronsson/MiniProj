@@ -6,7 +6,6 @@ import View.MainForm;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
-import java.sql.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -111,7 +110,7 @@ public class Client {
         oos.flush();
     }
 
-    public void sendRequesttoServer( int productId) throws IOException {
+    public void sendRequestToServer(int productId) throws IOException {
         Request request = new Request(this.userId, productId);
         oos.writeObject(request);
         oos.flush();

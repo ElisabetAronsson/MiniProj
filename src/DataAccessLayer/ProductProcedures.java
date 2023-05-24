@@ -338,25 +338,42 @@ public class ProductProcedures {
     }
     public Hashtable searchByDate(String startDate, String endDate) {
         List<Object> list = new ArrayList<>();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
         try {
-            DatabaseConnection databaseConnection = new DatabaseConnection();
             CallableStatement statement = databaseConnection.getConnection().prepareCall("Select * from search_by_date(?, ?)");
+
+
+            DefaultTableModel tableModel = new DefaultTableModel();
+            String[] columnNames = {"ProductName", "DateOfTransaction"};
+
+            for (int i = 0; i < columnNames.length; i++){
+                tableModel.addColumn(columnNames[i]);
+            }
+            int counter = 0;
+
             statement.setString(1, startDate);
             statement.setString(2, endDate);
 
-            ResultSet result = statement.executeQuery();
+            statement.executeQuery();
 
-            while (result.next()){
-                String productName = result.getString("product_name");
-                list.add(productName);
-                System.out.println("Prod name: " + productName);
 
+            ResultSet result = statement.getResultSet();
+
+            while (result.next()) {
+                tableModel.insertRow(counter, new Object[]{result.getString(1), result.getString(2)});
+                //counter++;
             }
+         /*   String productName = result.getString("product_name");
+            list.add(productName);
+            System.out.println("Prod name: " + productName);*/
+
+            Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
+            hashtable.put("Orders", tableModel);
+            return hashtable;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 
     public Hashtable getUsersProducts(int user_id) throws SQLException {

@@ -186,8 +186,8 @@ public class Server {
         System.out.println("START DATE: " + startDate);
         System.out.println("END DATE: " + endDate);
         Hashtable results = productProcedures.searchByDate(startDate, endDate);
-        //oos.writeObject(results);
-        //oos.flush();
+        oos.writeObject(results);
+        oos.flush();
 
     }
 
