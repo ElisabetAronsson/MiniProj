@@ -174,7 +174,9 @@ public class ProfileForm implements ActionListener {
         visitWishlistButton.addActionListener(this);
         visitWishlistButton.setActionCommand("visitWishlist");
         inboxButton.addActionListener(this);
-        inboxButton.setActionCommand("getInbox");
+        inboxButton.setActionCommand("showInbox");
+        createWishButton.addActionListener(this);
+        createWishButton.setActionCommand("createWish");
     }
 
     /**
@@ -369,7 +371,7 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-            case "getInbox":
+            case "showInbox":
                 try {
                     c.accessInbox();
                 } catch (IOException ex) {

@@ -11,7 +11,6 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 public class WishProcedures
-
 {
 
     public static void main(String[] args) throws SQLException {

@@ -478,7 +478,7 @@ public class ProductProcedures {
     public Hashtable getAvailableWishlist(int user_id) throws SQLException{
         List<Object> list = new ArrayList<>();
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_user_wishlisttest(?)");
+        CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_user_wishlist_available(?)");
         statement.setInt(1, user_id);
 
         DefaultTableModel tableModel = new DefaultTableModel();

@@ -288,6 +288,10 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("My Wishlist");
+        }if(hashtable.containsKey("Available wishlist")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("Available wishlist"));
+            mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Available wishlist");
         }
     }
 

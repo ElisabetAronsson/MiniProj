@@ -107,8 +107,9 @@ public class Server {
                             }
                             else if(request.getRequestType().equals("requestItemFromCart")){
                                 productProcedures.requestItemFromCart(request.getUserId(), request.getProduct_id());
+
                             }else if(request.getRequestType().equals("showInbox")){
-                                productProcedures.getAvailableWishlist(request.getUserId());
+                                sendClientAvailableWishlist(request.getUserId(), oos);
                             }
 
                         }
