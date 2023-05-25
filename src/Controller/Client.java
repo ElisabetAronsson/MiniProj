@@ -281,6 +281,7 @@ public class Client {
             System.out.println("handleHashTable from server: My wishlist");
             mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
             mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("My Wishlist");
         }
     }
 
