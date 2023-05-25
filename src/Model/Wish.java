@@ -2,6 +2,9 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a wish
+ */
 public class Wish implements Serializable {
     private int userID;
     private String productName;
@@ -15,7 +18,6 @@ public class Wish implements Serializable {
     public int getUserID() {
         return userID;
     }
-
     public String getProductName() {
         return productName;
     }

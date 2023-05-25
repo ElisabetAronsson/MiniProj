@@ -19,9 +19,14 @@ public class WishProcedures
 
         Wish newWish = new Wish(11, "New Product");
         wishProcedures.addWishToDataBase(newWish);
-
     }
 
+    /**
+     * Retrieves the users wishlist
+     * @param user_id
+     * @return
+     * @throws SQLException
+     */
     public Hashtable getUserWishlist(int user_id) throws SQLException {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_user_wishlist(?)");
@@ -45,20 +50,16 @@ public class WishProcedures
 
         Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
         hashtable.put("My Wishlist", tableModel);
-
-        int rowCount = tableModel.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < tableModel.getColumnCount(); j++) {
-                System.out.print(tableModel.getValueAt(i, j) + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("The function works");
-        System.out.println("DB method contains My Wishlist: " + hashtable.containsKey("My Wishlist"));
         return hashtable;
     }
 
 
+    /**
+     * Adds a wish to the database
+     * @param wish
+     * @return
+     * @throws SQLException
+     */
     public Hashtable<String, DefaultTableModel> addWishToDataBase(Wish wish) throws SQLException {
         Hashtable<String, DefaultTableModel> hashtable = new Hashtable<>();
         DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -86,20 +87,7 @@ public class WishProcedures
             tableModel.insertRow(counter, new Object[]{res.getInt(1), res.getString(2)});
             counter++;
         }
-
         hashtable.put("My Wishlist", tableModel);
-
-        int rowCount = tableModel.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < tableModel.getColumnCount(); j++) {
-                System.out.print(tableModel.getValueAt(i, j) + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("The method works");
-        System.out.println("DB method contains My Wishlist: " + hashtable.containsKey("My Wishlist"));
-
         return hashtable;
     }
 

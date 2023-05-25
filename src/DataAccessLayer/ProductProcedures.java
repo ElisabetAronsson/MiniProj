@@ -277,9 +277,6 @@ public class ProductProcedures {
         statement.setInt(1, user_id);
 
         DefaultTableModel tableModel = new DefaultTableModel();
-        /**
-         * Här är det fel värden!
-         */
         String[] columnNames = {"ProductID", "Buyer ID","Title", "Price","Year of production" ,"Color","Condition"};
         //Add the column names to the table model
         for (int i = 0; i < columnNames.length; i++) {

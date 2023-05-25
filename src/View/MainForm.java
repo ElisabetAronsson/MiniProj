@@ -9,10 +9,6 @@ import javax.swing.*;
  * This class is the main JFrame of the application.
  */
 public class MainForm {
-
-    /**
-     * Declare variables.
-     */
     private JFrame mainFrame;
     private Client c;
     private LoginForm loginForm;
@@ -21,7 +17,11 @@ public class MainForm {
     private ProfileForm profileForm;
 
     /**
-     * Constructor
+     * The mainform is contains a mainframe where
+     * then depending on what view youre on adds the different
+     * panels LoginForm/RegisterForm/ProductForm/ProfileForm
+     *
+     * This is the constructor and it sets up the mainframe
      */
     public MainForm(Client c){
         //Assign client variable.

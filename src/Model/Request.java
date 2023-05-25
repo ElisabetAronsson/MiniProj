@@ -10,14 +10,13 @@ public class Request implements Serializable {
     private String requestType;
     private String productName;
     private String param;
-
     private int userId;
-
 
     public Request(int userId, String requestType){
         this.userId = userId;
         this.requestType = requestType;
     }
+
     /**
      * Adding to shoppingcart
      * @param buyer_id
@@ -79,31 +78,18 @@ public class Request implements Serializable {
     public int getBuyer_id() {
         return buyer_id;
     }
-
-    public void setBuyer_id(int buyer_id) {
-        this.buyer_id = buyer_id;
-    }
-
     public int getProduct_id() {
         return product_id;
     }
-
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
-
     public String getRequestType(){
         return this.requestType;
     }
-
     public String getProductName(){
         return this.productName;
     }
-
     public int getUserId() {
         return this.userId;
     }
-
     public String getParam(){
         return this.param;
     }

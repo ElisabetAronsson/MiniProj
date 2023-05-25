@@ -27,7 +27,7 @@ public class LoginForm implements ActionListener{
     private Client c;
 
     /**
-     * Constructor
+     * Sets up the panel
      */
     public LoginForm(Client c) {
         //Assign the client variable to the local one.
@@ -69,6 +69,9 @@ public class LoginForm implements ActionListener{
         addListeners();
     }
 
+    /**
+     * Handles failed login
+     */
     public void failedToLogin(){
         errorLabel.setText("Login failure!");
         errorLabel.setForeground(Color.RED);

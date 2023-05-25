@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Panel for the marketplace view
+ */
 public class MarketplaceForm implements ActionListener {
     private JPanel productPanel;
     private JButton addProductButton;
@@ -25,9 +28,12 @@ public class MarketplaceForm implements ActionListener {
     private JButton searchByPriceButton;
     private JButton searchByConditionButton;
     private JButton showAllProductsButton;
-
     private JLabel title;
 
+    /**
+     * Sets up the marketplace view panel
+     * @param c
+     */
     public MarketplaceForm(Client c) {
 
 
@@ -178,6 +184,10 @@ public class MarketplaceForm implements ActionListener {
         }
     }
 
+    /**
+     * Pop-up functionality for when wanting to add to shoppingcart
+     * @return
+     */
     public boolean addToCart(){
         String productId = "";
         try {
@@ -242,6 +252,10 @@ public class MarketplaceForm implements ActionListener {
         return this.productPanel;
     }
 
+    /**
+     * Actions when pressing the different buttons
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();

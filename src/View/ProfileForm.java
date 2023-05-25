@@ -16,6 +16,9 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
+/**
+ * Panel view for visiting profile
+ */
 public class ProfileForm implements ActionListener {
     private JPanel profilePanel;
     private JButton returnButton;
@@ -42,6 +45,10 @@ public class ProfileForm implements ActionListener {
     private JButton inboxButton;
 
 
+    /**
+     * Setting up profile panel
+     * @param c
+     */
     public ProfileForm(Client c) {
         this.c = c;
         returnButton = new JButton("← Marketplace");
@@ -133,6 +140,10 @@ public class ProfileForm implements ActionListener {
         addListeners();
     }
 
+    /**
+     * Adding the table for the profile
+     * @param tableModel
+     */
     public void createTableModel(DefaultTableModel tableModel){
         //If it is not null, it means that the table is already created and just needs to be updated with new data.
         if(this.tableModel == null){
@@ -152,6 +163,9 @@ public class ProfileForm implements ActionListener {
         }
     }
 
+    /**
+     * Creating a reference between buttons and actionevent
+     */
     private void addListeners() {
         returnButton.addActionListener(this);
         returnButton.setActionCommand("marketplace");
@@ -229,11 +243,19 @@ public class ProfileForm implements ActionListener {
         }
     }
 
+    /**
+     * Functionality for the client to retrieve all the product owned by the user
+     * @throws IOException
+     */
     public void showAllProducts() throws IOException{
         c.sendShowAllProductsToServer();
     }
 
 
+    /**
+     * Functionality to redirect to the marketplace panel
+     * @throws IOException
+     */
     private void returnToMarket() throws IOException {
         c.accessMarketplace();
     }
@@ -242,6 +264,10 @@ public class ProfileForm implements ActionListener {
         return profilePanel;
     }
 
+    /**
+     * Actionevents linked by buttonreference
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -381,6 +407,10 @@ public class ProfileForm implements ActionListener {
         }
     }
 
+    /**
+     * Asks client to send server a request about purchasing products in shoppingcart
+     * @throws IOException
+     */
     private void requestProductsInCart() throws IOException {
         ArrayList<Integer> firstColumnValues = new ArrayList<>();
         int rowCount = tableModel.getRowCount();
@@ -391,6 +421,10 @@ public class ProfileForm implements ActionListener {
         c.sendCartRequestToServer();
     }
 
+    /**
+     * Asks client to request server to remove a product from the shoppingcart
+     * @return
+     */
     private boolean removeFromCart() {
         String productId = "";
         try {
@@ -411,6 +445,9 @@ public class ProfileForm implements ActionListener {
         return true;
     }
 
+    /**
+     * Search by date functionality pop-ups and requesting client to ask server for table update
+     */
     public void searchByDate(){
         String start, end;
         start = JOptionPane.showInputDialog( "Enter a start date for search. (Format: YYYY-MM-DD)");
@@ -432,6 +469,9 @@ public class ProfileForm implements ActionListener {
         }
     }
 
+    /**
+     * Updates the button when on shoppingcart view
+     */
     public void cartButtons() {
         removeProductFromCart.setVisible(true);
         buyProductsInCart.setVisible(true);
@@ -442,6 +482,10 @@ public class ProfileForm implements ActionListener {
         visitWishlistButton.setEnabled(true);
     }
 
+    /**
+     * Functionality to create a listed wish of the user
+     * @throws IOException
+     */
     private void createWish() throws IOException {
         String type=JOptionPane.showInputDialog(null,"Enter the products type");
         c.sendWishToServer(c.getUserId(), type);

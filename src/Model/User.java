@@ -23,7 +23,6 @@ public class User implements Serializable {
      * @param dateOfBirth
      * @param email
      */
-
     public User(String username, String password, String dateOfBirth, String email, boolean isRegistered){
         this.username = username;
         this.password = password;
