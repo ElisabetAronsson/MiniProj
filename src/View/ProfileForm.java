@@ -63,6 +63,8 @@ public class ProfileForm implements ActionListener {
         searchByDate.setVisible(false);
         removeProductFromCart.setVisible(false);
         buyProductsInCart.setVisible(false);
+        createWishButton.setVisible(false);
+        inboxButton.setVisible(false);
 
         myInventoryButton.setEnabled(false);
         orderHistory.setEnabled(true);
