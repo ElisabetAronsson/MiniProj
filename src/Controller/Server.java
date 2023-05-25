@@ -3,10 +3,7 @@ package Controller;
 import DataAccessLayer.ProductProcedures;
 import DataAccessLayer.UserProcedures;
 import DataAccessLayer.WishProcedures;
-import Model.Product;
-import Model.Request;
-import Model.ServerRequest;
-import Model.User;
+import Model.*;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
@@ -120,6 +117,12 @@ public class Server {
                         } else if(object instanceof Integer){
                             sendClientUsersProducts((int)object, oos);
                         }
+
+                        else if (object instanceof Wish) {
+                            System.out.println("Lägger till wish för user id: " +((Wish) object).getUserID());
+                            addWishToDataBase((Wish) object,oos);
+
+                        }
                         else if(object instanceof ServerRequest){
                             ServerRequest serverRequest = (ServerRequest) object;
                             if(serverRequest.getRequestType().equals("getOrderHistory")){
@@ -157,6 +160,10 @@ public class Server {
         oos.flush();
     }
 
+    private void addWishToDataBase(Wish wish,ObjectOutputStream oos) throws IOException, SQLException {
+        oos.writeObject(wishProcedures.addWishToDataBase(wish));
+        oos.flush();
+    }
     private void sendWishListToClient(int userID,ObjectOutputStream oos) throws SQLException, IOException {
         oos.writeObject(wishProcedures.getUserWishlist(userID));
         System.out.println("Contains message server: " + productProcedures.

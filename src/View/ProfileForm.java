@@ -352,6 +352,13 @@ public class ProfileForm implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 break;
+
+            case "createWish":
+                try {
+                    createWish();  // Call a new method in the Client class
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             case "buyProductsFromCart":
                 try {
                     requestProductsInCart();
@@ -420,5 +427,10 @@ public class ProfileForm implements ActionListener {
         orderHistory.setEnabled(true);
         myRequests.setEnabled(true);
         visitWishlistButton.setEnabled(true);
+    }
+
+    private void createWish() throws IOException {
+        String type=JOptionPane.showInputDialog(null,"Enter the products type");
+        c.sendWishToServer(c.getUserId(), type);
     }
 }

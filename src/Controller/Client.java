@@ -115,6 +115,12 @@ public class Client {
 
     }
 
+    public void sendWishToServer(int userID,String productName) throws IOException {
+        Wish wish = new Wish(userID, productName);
+        oos.writeObject(wish);
+        oos.flush();
+    }
+
     public void sendRemoveFromCartToServer(int productId) throws IOException {
         Request request = new Request(productId, "removeFromCart", userId);
         oos.writeObject(request);
