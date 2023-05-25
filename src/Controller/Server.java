@@ -4,6 +4,7 @@ import DataAccessLayer.ProductProcedures;
 import DataAccessLayer.UserProcedures;
 import DataAccessLayer.WishProcedures;
 import Model.*;
+import Model.Client;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
@@ -281,6 +282,8 @@ public class Server {
         int userId = userProcedures.signInUser(user.getUsername(), user.getPassword());
         //If higher than 0, login was successfull.
         if(userId > 0){
+            //add client to hashmap
+            clientManager.addClient(new Client());
             sendStringMessageToClient("loginSuccess", oos);
             //Send the user id that was returned from the database to the client.
             sendUserIdToClient(userId, oos);
