@@ -53,6 +53,10 @@ public class ProfileForm implements ActionListener {
         removeProductFromCart.setVisible(false);
         buyProductsInCart.setVisible(false);
 
+        myInventoryButton.setEnabled(false);
+        orderHistory.setEnabled(true);
+        myRequests.setEnabled(true);
+
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
         profilePanel.setLayout (null);
@@ -213,6 +217,11 @@ public class ProfileForm implements ActionListener {
                     searchByDate.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+
+                    myInventoryButton.setEnabled(true);
+                    orderHistory.setEnabled(true);
+                    myRequests.setEnabled(false);
+
                     c.accessRequests();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -226,6 +235,11 @@ public class ProfileForm implements ActionListener {
                     declineRequestButton.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+
+                    myInventoryButton.setEnabled(true);
+                    orderHistory.setEnabled(false);
+                    myRequests.setEnabled(true);
+
                     c.accessOrderHistory();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -247,6 +261,11 @@ public class ProfileForm implements ActionListener {
                     declineRequestButton.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+
+                    myInventoryButton.setEnabled(false);
+                    orderHistory.setEnabled(true);
+                    myRequests.setEnabled(true);
+
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -308,10 +327,19 @@ public class ProfileForm implements ActionListener {
 
     public void setTitle(String name) {
         title.setText(name);
+        if (name.equals("My Inventory")){
+            myInventoryButton.setEnabled(false);
+            orderHistory.setEnabled(true);
+            myRequests.setEnabled(true);
+        }
     }
 
     public void cartButtons() {
         removeProductFromCart.setVisible(true);
         buyProductsInCart.setVisible(true);
+
+        myInventoryButton.setEnabled(true);
+        orderHistory.setEnabled(true);
+        myRequests.setEnabled(true);
     }
 }
