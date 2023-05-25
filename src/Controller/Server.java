@@ -125,7 +125,7 @@ public class Server {
         }
     }
 
-    private void addWishToDataBase(Wish wish){
+    private void addWishToDataBase(Wish wish) throws IOException, SQLException {
         oos.writeObject(wishProcedures.addWishToDataBase(wish));
         oos.flush();
     }
