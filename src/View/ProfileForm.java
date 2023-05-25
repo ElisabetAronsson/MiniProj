@@ -99,8 +99,9 @@ public class ProfileForm implements ActionListener {
 
         acceptRequestButton.setBounds(500, 450, 150, 25);
         declineRequestButton.setBounds(700, 450, 150, 25);
-        removeProductFromCart.setBounds(750, 500, 120, 25);
-        buyProductsInCart.setBounds(550, 500, 120, 25);
+
+        removeProductFromCart.setBounds(500, 450, 150, 25);
+        buyProductsInCart.setBounds(700, 450, 150, 25);
 
         searchByDate.setBounds(700, 450, 150, 25);
 

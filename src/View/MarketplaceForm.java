@@ -35,13 +35,13 @@ public class MarketplaceForm implements ActionListener {
         this.c = c;
 
         //construct components
-        addProductButton = new JButton("Add Product");
+        addProductButton = new JButton("Sell Product");
         cartButton = new JButton("Add to cart");
-        profileButton = new JButton ("My Inventory");
+        profileButton = new JButton ("My Inventory →");
         searchByTypeButton = new JButton("Search By Type");
         searchByPriceButton = new JButton("Search By Price");
         searchByConditionButton = new JButton("Search By Condition");
-        viewCartButton = new JButton("View cart");
+        viewCartButton = new JButton("View cart →");
 
         showAllProductsButton = new JButton("Show All Products");
 
@@ -64,15 +64,41 @@ public class MarketplaceForm implements ActionListener {
         productPanel.add(showAllProductsButton);
         productPanel.add(title);
 
+        searchByTypeButton.setFocusPainted(false);
+        searchByTypeButton.setContentAreaFilled(false);
+        searchByTypeButton.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.GRAY));
+
+        searchByConditionButton.setFocusPainted(false);
+        searchByConditionButton.setContentAreaFilled(false);
+        searchByConditionButton.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.GRAY));
+
+        searchByPriceButton.setFocusPainted(false);
+        searchByPriceButton.setContentAreaFilled(false);
+        searchByPriceButton.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.GRAY));
+
+        showAllProductsButton.setFocusPainted(false);
+        showAllProductsButton.setContentAreaFilled(false);
+        showAllProductsButton.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.GRAY));
+
+        profileButton.setFocusPainted(false);
+        profileButton.setContentAreaFilled(false);
+        profileButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        viewCartButton.setFocusPainted(false);
+        viewCartButton.setContentAreaFilled(false);
+        viewCartButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
         //set component bounds (only needed by Absolute Positioning)
-        addProductButton.setBounds (100, 450, 120, 25);
-        cartButton.setBounds (250, 450, 120,25);
-        profileButton.setBounds (700, 450, 120, 25);
-        viewCartButton.setBounds(700, 500, 120, 25);
-        searchByTypeButton.setBounds (100, 500, 120, 25);
-        searchByPriceButton.setBounds (420, 500, 120, 25);
-        searchByConditionButton.setBounds (250, 500, 150,25);
-        showAllProductsButton.setBounds(560,500,120,25);
+        addProductButton.setBounds (85, 475, 120, 25);
+        cartButton.setBounds (85, 510, 120,25);
+
+        profileButton.setBounds (710, 425, 120, 25);
+        viewCartButton.setBounds(710, 450, 120, 25);
+
+        searchByTypeButton.setBounds (85, 425, 150, 15);
+        searchByPriceButton.setBounds (235, 425, 150, 15);
+        searchByConditionButton.setBounds (385, 425, 150,15);
+        showAllProductsButton.setBounds(535,425,150,15);
 
         title.setBounds((944/2)-75, 20, 150,40);
         title.setFont(new Font("Serif", Font.PLAIN, 30));
