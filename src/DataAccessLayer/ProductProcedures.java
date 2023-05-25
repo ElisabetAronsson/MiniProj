@@ -474,4 +474,32 @@ public class ProductProcedures {
         }
         return false;
     }
+
+    public Hashtable getAvailableWishlist(int user_id) throws SQLException{
+        List<Object> list = new ArrayList<>();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        CallableStatement statement = databaseConnection.getConnection().prepareCall("SELECT * FROM get_user_wishlist_available(?)");
+        statement.setInt(1, user_id);
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        String[] columnNames = {"UserID", "Product Name", "Available"};
+        //Add the column names to the table model
+        for (int i = 0; i < columnNames.length; i++) {
+            tableModel.addColumn(columnNames[i]);
+        }
+        int counter = 0;
+
+        statement.executeQuery();
+        ResultSet res = statement.getResultSet();
+        while (res.next()) {
+            //Add the data to the table model
+            tableModel.insertRow(counter, new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                });
+            counter++;
+        }
+
+        Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
+        hashtable.put("Available wishlist", tableModel);
+        return hashtable;
+    }
 }

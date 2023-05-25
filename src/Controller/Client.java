@@ -107,6 +107,20 @@ public class Client {
         oos.flush();
     }
 
+    public void accessWishlist() throws IOException {
+        System.out.println("accessWishList function in client called");
+        ServerRequest serverRequest = new ServerRequest("accessWishList",userId);
+        oos.writeObject(serverRequest);
+        oos.flush();
+
+    }
+
+    public void sendWishToServer(int userID,String productName) throws IOException {
+        Wish wish = new Wish(userID, productName);
+        oos.writeObject(wish);
+        oos.flush();
+    }
+
     public void sendRemoveFromCartToServer(int productId) throws IOException {
         Request request = new Request(productId, "removeFromCart", userId);
         oos.writeObject(request);
@@ -269,6 +283,16 @@ public class Client {
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("Orders by date");
         }
+        if(hashtable.containsKey("My Wishlist")){
+            System.out.println("handleHashTable from server: My wishlist");
+            mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
+            mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("My Wishlist");
+        }if(hashtable.containsKey("Available wishlist")){
+            mainForm.getProfileForm().createTableModel(hashtable.get("Available wishlist"));
+            mainForm.setProfilePanel();
+            mainForm.getProfileForm().setTitle("Available wishlist");
+        }
     }
 
 
@@ -306,7 +330,7 @@ public class Client {
 
     public static void main(String[] args) {
         //Startar main fönstret.
-        new Client();
+            new Client();
     }
     public User getCurrentUser(){
         return new User("todo", "later", true); //I guess we need an instance variable for this?
@@ -317,4 +341,9 @@ public class Client {
     }
 
 
+    public void accessInbox() throws IOException{
+        Request request = new Request("","showInbox", userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
 }

@@ -3,6 +3,10 @@ package View;
 import Controller.Client;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,11 +36,15 @@ public class ProfileForm implements ActionListener {
     private JButton removeProductFromCart;
     private JButton buyProductsInCart;
 
+    private JButton visitWishlistButton;
+
+    private JButton createWishButton;
+    private JButton inboxButton;
 
 
     public ProfileForm(Client c) {
         this.c = c;
-        returnButton = new JButton("Marketplace");
+        returnButton = new JButton("← Marketplace");
         myRequests =  new JButton("Requests");
         orderHistory = new JButton("Order History");
         acceptRequestButton = new JButton("Accept Request");
@@ -46,12 +54,21 @@ public class ProfileForm implements ActionListener {
         myInventoryButton = new JButton("My Inventory");
         removeProductFromCart = new JButton("Remove Product");
         buyProductsInCart = new JButton("Buy Products");
+        visitWishlistButton = new JButton("Wishlist");
+        createWishButton = new JButton("Create new Wish");
+        inboxButton = new JButton("Inbox");
 
         acceptRequestButton.setVisible(false);
         declineRequestButton.setVisible(false);
         searchByDate.setVisible(false);
         removeProductFromCart.setVisible(false);
         buyProductsInCart.setVisible(false);
+        createWishButton.setVisible(false);
+        inboxButton.setVisible(false);
+
+        myInventoryButton.setEnabled(false);
+        orderHistory.setEnabled(true);
+        myRequests.setEnabled(true);
 
         profilePanel = new JPanel();
         profilePanel.setPreferredSize (new Dimension(944, 569));
@@ -67,17 +84,48 @@ public class ProfileForm implements ActionListener {
         profilePanel.add(myInventoryButton);
         profilePanel.add(removeProductFromCart);
         profilePanel.add(buyProductsInCart);
+        profilePanel.add(visitWishlistButton);
+        profilePanel.add(createWishButton);
+        profilePanel.add(inboxButton);
 
-        returnButton.setBounds (100, 450, 120, 25);
-        myRequests.setBounds(550, 450, 120, 25);
-        orderHistory.setBounds(750, 450,120,25);
-        acceptRequestButton.setBounds(750, 500, 120, 25);
-        declineRequestButton.setBounds(550, 500, 120, 25);
-        removeProductFromCart.setBounds(750, 500, 120, 25);
-        buyProductsInCart.setBounds(550, 500, 120, 25);
 
-        searchByDate.setBounds(750, 500, 120, 25);
-        myInventoryButton.setBounds(240,450,120,25);
+        returnButton.setFocusPainted(false);
+        returnButton.setContentAreaFilled(false);
+        returnButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+
+        visitWishlistButton.setFocusPainted(false);
+        visitWishlistButton.setContentAreaFilled(false);
+        visitWishlistButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        myInventoryButton.setFocusPainted(false);
+        myInventoryButton.setContentAreaFilled(false);
+        myInventoryButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        myRequests.setFocusPainted(false);
+        myRequests.setContentAreaFilled(false);
+        myRequests.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        orderHistory.setFocusPainted(false);
+        orderHistory.setContentAreaFilled(false);
+        orderHistory.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        returnButton.setBounds (100, 425, 120, 25);
+        myInventoryButton.setBounds(100,450,120,25);
+        myRequests.setBounds(100, 475, 120, 25);
+        orderHistory.setBounds(100, 500,120,25);
+        visitWishlistButton.setBounds(100, 525, 120, 25);
+
+        createWishButton.setBounds(500,450,150,25);
+        inboxButton.setBounds(700,450,150,25);
+
+        acceptRequestButton.setBounds(500, 450, 150, 25);
+        declineRequestButton.setBounds(700, 450, 150, 25);
+
+        removeProductFromCart.setBounds(500, 450, 150, 25);
+        buyProductsInCart.setBounds(700, 450, 150, 25);
+
+        searchByDate.setBounds(700, 450, 150, 25);
 
         title.setBounds((944/2)-90, 20, 180,40);
         title.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -123,6 +171,12 @@ public class ProfileForm implements ActionListener {
         removeProductFromCart.setActionCommand("removeProductFromCart");
         buyProductsInCart.addActionListener(this);
         buyProductsInCart.setActionCommand("buyProductsFromCart");
+        visitWishlistButton.addActionListener(this);
+        visitWishlistButton.setActionCommand("visitWishlist");
+        inboxButton.addActionListener(this);
+        inboxButton.setActionCommand("showInbox");
+        createWishButton.addActionListener(this);
+        createWishButton.setActionCommand("createWish");
     }
 
     /**
@@ -191,7 +245,7 @@ public class ProfileForm implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        switch (action){
+        switch (action) {
             case "marketplace":
                 try {
                     searchByDate.setVisible(false);
@@ -199,6 +253,8 @@ public class ProfileForm implements ActionListener {
                     declineRequestButton.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+                    createWishButton.setVisible(false);
+                    inboxButton.setVisible(false);
                     showAllProducts();
                     returnToMarket();
                     c.getMainForm().setProductPanel();
@@ -213,6 +269,14 @@ public class ProfileForm implements ActionListener {
                     searchByDate.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+                    createWishButton.setVisible(false);
+                    inboxButton.setVisible(false);
+
+                    myInventoryButton.setEnabled(true);
+                    orderHistory.setEnabled(true);
+                    myRequests.setEnabled(false);
+                    visitWishlistButton.setEnabled(true);
+
                     c.accessRequests();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -226,13 +290,22 @@ public class ProfileForm implements ActionListener {
                     declineRequestButton.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+                    createWishButton.setVisible(false);
+                    inboxButton.setVisible(false);
+
+                    myInventoryButton.setEnabled(true);
+                    orderHistory.setEnabled(false);
+                    myRequests.setEnabled(true);
+                    visitWishlistButton.setEnabled(true);
+
+
                     c.accessOrderHistory();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 break;
             case "acceptRequest":
-                    acceptRequest();
+                acceptRequest();
                 break;
             case "declineRequest":
                 declineRequest();
@@ -247,6 +320,15 @@ public class ProfileForm implements ActionListener {
                     declineRequestButton.setVisible(false);
                     removeProductFromCart.setVisible(false);
                     buyProductsInCart.setVisible(false);
+                    createWishButton.setVisible(false);
+                    inboxButton.setVisible(false);
+
+                    myInventoryButton.setEnabled(false);
+                    orderHistory.setEnabled(true);
+                    myRequests.setEnabled(true);
+                    visitWishlistButton.setEnabled(true);
+
+
                     c.sendUserIdToServerProfile(c.getUserId());
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -255,9 +337,43 @@ public class ProfileForm implements ActionListener {
             case "removeProductFromCart":
                 removeFromCart();
                 break;
+
+            case "visitWishlist":
+                try {
+                    searchByDate.setVisible(false);
+                    acceptRequestButton.setVisible(false);
+                    declineRequestButton.setVisible(false);
+                    removeProductFromCart.setVisible(false);
+                    buyProductsInCart.setVisible(false);
+                    createWishButton.setVisible(true);
+                    inboxButton.setVisible(true);
+
+                    myInventoryButton.setEnabled(true);
+                    orderHistory.setEnabled(true);
+                    myRequests.setEnabled(true);
+                    visitWishlistButton.setEnabled(false);
+
+                    c.accessWishlist();  // Call the new method in the Client class
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
+
+            case "createWish":
+                try {
+                    createWish();  // Call a new method in the Client class
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             case "buyProductsFromCart":
                 try {
                     requestProductsInCart();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            case "showInbox":
+                try {
+                    c.accessInbox();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -308,10 +424,25 @@ public class ProfileForm implements ActionListener {
 
     public void setTitle(String name) {
         title.setText(name);
+        if (name.equals("My Inventory")){
+            myInventoryButton.setEnabled(false);
+            orderHistory.setEnabled(true);
+            myRequests.setEnabled(true);
+        }
     }
 
     public void cartButtons() {
         removeProductFromCart.setVisible(true);
         buyProductsInCart.setVisible(true);
+
+        myInventoryButton.setEnabled(true);
+        orderHistory.setEnabled(true);
+        myRequests.setEnabled(true);
+        visitWishlistButton.setEnabled(true);
+    }
+
+    private void createWish() throws IOException {
+        String type=JOptionPane.showInputDialog(null,"Enter the products type");
+        c.sendWishToServer(c.getUserId(), type);
     }
 }
