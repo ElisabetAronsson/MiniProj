@@ -4,14 +4,13 @@ import DataAccessLayer.ProductProcedures;
 import DataAccessLayer.UserProcedures;
 import DataAccessLayer.WishProcedures;
 import Model.*;
-import Model.Client;
+import Model.ClientModel;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -41,7 +40,7 @@ public class Server {
         userProcedures = new UserProcedures();
         productProcedures = new ProductProcedures();
         wishProcedures = new WishProcedures();
-        clientManager = new ClientManager();
+        clientManager = new ClientManager(wishProcedures);
 
 
         while (true) {
@@ -283,7 +282,7 @@ public class Server {
         //If higher than 0, login was successfull.
         if(userId > 0){
             //add client to hashmap
-            clientManager.addClient(new Client());
+            clientManager.addClient(new ClientModel(userId,oos));
             sendStringMessageToClient("loginSuccess", oos);
             //Send the user id that was returned from the database to the client.
             sendUserIdToClient(userId, oos);
