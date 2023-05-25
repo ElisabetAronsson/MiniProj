@@ -326,9 +326,7 @@ public class Client {
 
     public static void main(String[] args) {
         //Startar main fönstret.
-        for (int i = 0; i < 2; i++) {
             new Client();
-        }
     }
     public User getCurrentUser(){
         return new User("todo", "later", true); //I guess we need an instance variable for this?
