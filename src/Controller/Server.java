@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -24,8 +25,10 @@ public class Server {
     private Socket clientSocket;
     private UserProcedures userProcedures;
     private ProductProcedures productProcedures;
-
     private WishProcedures wishProcedures;
+
+    private ClientManager clientManager;
+
 
     /**
      * This function starts the server when it's called.
@@ -37,6 +40,8 @@ public class Server {
         userProcedures = new UserProcedures();
         productProcedures = new ProductProcedures();
         wishProcedures = new WishProcedures();
+        clientManager = new ClientManager();
+
 
         while (true) {
             //Accept a clients connection.
