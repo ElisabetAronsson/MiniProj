@@ -2,6 +2,7 @@ package Controller;
 
 import DataAccessLayer.ProductProcedures;
 import DataAccessLayer.UserProcedures;
+import DataAccessLayer.WishProcedures;
 import Model.Product;
 import Model.Request;
 import Model.ServerRequest;
@@ -27,6 +28,8 @@ public class Server {
     private UserProcedures userProcedures;
     private ProductProcedures productProcedures;
 
+    private WishProcedures wishProcedures;
+
     /**
      * This function starts the server when it's called.
      * @throws IOException
@@ -36,6 +39,7 @@ public class Server {
         System.out.println("Server started on port 8080");
         userProcedures = new UserProcedures();
         productProcedures = new ProductProcedures();
+        wishProcedures = new WishProcedures();
 
         while (true) {
             //Accept a clients connection.
@@ -107,6 +111,7 @@ public class Server {
                             else if(request.getRequestType().equals("requestItemFromCart")){
                                 productProcedures.requestItemFromCart(request.getUserId(), request.getProduct_id());
                             }
+
                         }
                         else if (object instanceof String){
                             if (object == "marketplace") {
@@ -124,6 +129,10 @@ public class Server {
                             if(serverRequest.getRequestType().equals("getRequests")){
                                 sendClientRequests(serverRequest.getUserID(), oos);
                             }
+                            if(serverRequest.getRequestType().equals("accessWishList")){
+                                System.out.println("Server sending wishlist to client");
+                                sendWishListToClient(serverRequest.getUserID(),oos);
+                            }
                         }
                     }
                 } catch (IOException e) {
@@ -137,6 +146,7 @@ public class Server {
         }
     }
 
+
     private void sendCartItemsToClient(int userId, ObjectOutputStream oos) throws SQLException, IOException {
         oos.writeObject(productProcedures.getUserShoppingcart(userId));
         oos.flush();
@@ -145,6 +155,14 @@ public class Server {
     private void sendClientUsersProducts(int userId, ObjectOutputStream oos) throws IOException, SQLException {
         oos.writeObject(productProcedures.getUsersProducts(userId));
         oos.flush();
+    }
+
+    private void sendWishListToClient(int userID,ObjectOutputStream oos) throws SQLException, IOException {
+        oos.writeObject(wishProcedures.getUserWishlist(userID));
+        System.out.println("Contains message server: " + productProcedures.
+                getUsersProducts(userID).containsKey("My Wishlist"));
+        oos.flush();
+
     }
 
     private void sendClientOrderHistory(int userId, ObjectOutputStream oos) throws IOException, SQLException {
