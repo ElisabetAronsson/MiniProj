@@ -94,24 +94,22 @@ public class Client {
         oos.writeObject(message);
         oos.flush();
     }
-
     public void accessOrderHistory() throws IOException {
-        ServerRequest serverRequest = new ServerRequest("getOrderHistory",userId);
-        oos.writeObject(serverRequest);
+        Request request = new Request(userId, "getOrderHistory");
+        oos.writeObject(request);
         oos.flush();
     }
 
     public void accessRequests() throws IOException{
-        ServerRequest serverRequest = new ServerRequest("getRequests",userId);
-        oos.writeObject(serverRequest);
+        Request request = new Request(userId, "getRequests");
+        oos.writeObject(request);
         oos.flush();
     }
 
     public void accessWishlist() throws IOException {
-        ServerRequest serverRequest = new ServerRequest("accessWishList",userId);
-        oos.writeObject(serverRequest);
+        Request request = new Request(userId,"accessWishList");
+        oos.writeObject(request);
         oos.flush();
-
     }
 
     public void sendWishToServer(int userID,String productName) throws IOException {

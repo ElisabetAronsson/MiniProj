@@ -107,11 +107,16 @@ public class Server {
                             }
                             else if(request.getRequestType().equals("requestItemFromCart")){
                                 productProcedures.requestItemFromCart(request.getUserId(), request.getProduct_id());
-
                             }else if(request.getRequestType().equals("showInbox")){
                                 sendClientAvailableWishlist(request.getUserId(), oos);
-                            }
+                            } else if(request.getRequestType().equals("getOrderHistory")){
+                                sendClientOrderHistory(request.getUserId(), oos);
+                            } else if(request.getRequestType().equals("getRequests")){
+                                sendClientRequests(request.getUserId(), oos);
+                            } else if(request.getRequestType().equals("accessWishList")){
+                                sendWishListToClient(request.getUserId(),oos);
 
+                            }
                         }
                         else if (object instanceof String){
                             if (object == "marketplace") {
@@ -120,23 +125,8 @@ public class Server {
                         } else if(object instanceof Integer){
                             sendClientUsersProducts((int)object, oos);
                         }
-
                         else if (object instanceof Wish) {
                             addWishToDataBase((Wish) object,oos);
-
-                        }
-                        else if(object instanceof ServerRequest){
-                            ServerRequest serverRequest = (ServerRequest) object;
-                            if(serverRequest.getRequestType().equals("getOrderHistory")){
-                                sendClientOrderHistory(serverRequest.getUserID(), oos);
-                            }
-
-                            if(serverRequest.getRequestType().equals("getRequests")){
-                                sendClientRequests(serverRequest.getUserID(), oos);
-                            }
-                            if(serverRequest.getRequestType().equals("accessWishList")){
-                                sendWishListToClient(serverRequest.getUserID(),oos);
-                            }
                         }
                     }
                 } catch (IOException e) {
