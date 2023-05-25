@@ -108,7 +108,6 @@ public class Client {
     }
 
     public void accessWishlist() throws IOException {
-        System.out.println("accessWishList function in client called");
         ServerRequest serverRequest = new ServerRequest("accessWishList",userId);
         oos.writeObject(serverRequest);
         oos.flush();
@@ -284,7 +283,6 @@ public class Client {
             mainForm.getProfileForm().setTitle("Orders by date");
         }
         if(hashtable.containsKey("My Wishlist")){
-            System.out.println("handleHashTable from server: My wishlist");
             mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("My Wishlist");

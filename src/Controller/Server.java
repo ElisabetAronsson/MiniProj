@@ -122,7 +122,6 @@ public class Server {
                         }
 
                         else if (object instanceof Wish) {
-                            System.out.println("Lägger till wish för user id: " +((Wish) object).getUserID());
                             addWishToDataBase((Wish) object,oos);
 
                         }
@@ -136,7 +135,6 @@ public class Server {
                                 sendClientRequests(serverRequest.getUserID(), oos);
                             }
                             if(serverRequest.getRequestType().equals("accessWishList")){
-                                System.out.println("Server sending wishlist to client");
                                 sendWishListToClient(serverRequest.getUserID(),oos);
                             }
                         }
@@ -169,8 +167,6 @@ public class Server {
     }
     private void sendWishListToClient(int userID,ObjectOutputStream oos) throws SQLException, IOException {
         oos.writeObject(wishProcedures.getUserWishlist(userID));
-        System.out.println("Contains message server: " + productProcedures.
-                getUsersProducts(userID).containsKey("My Wishlist"));
         oos.flush();
 
     }
