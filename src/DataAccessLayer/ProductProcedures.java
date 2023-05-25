@@ -235,31 +235,6 @@ public class ProductProcedures {
             return false;   // Return false if any exception occurs
         }
     }
-
-
-    public boolean buyReq(int user_id, int product_id) { // Måste uppdatera ägaren av produkten att en req finns
-        DatabaseConnection dc = new DatabaseConnection();
-        try (CallableStatement statement = dc.getConnection().prepareCall("{ ? = call buyreq(?,?) }")) {
-            statement.registerOutParameter(1, Types.BOOLEAN);
-            statement.setInt(2, user_id);
-            statement.setInt(3, product_id);
-            statement.execute();
-            boolean result = statement.getBoolean(1);
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean register(User user) {
-        return false;
-    }
-
-    public boolean login() {
-        return false;
-    }
-
    public Hashtable getOrderHistory(int user_id) throws SQLException{
        List<Object> list = new ArrayList<>();
        DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -390,17 +365,6 @@ public class ProductProcedures {
         Hashtable<String, DefaultTableModel> hashtable = new Hashtable();
         hashtable.put("My products", tableModel);
         return hashtable;
-    }
-
-    public boolean registerNewProd(Product product) { //Skicka ut till alla online users att products är uppdaterad
-        //Ny rad i products
-        return false;
-    }
-
-    public List<Object> getPurchasedProducts(Date earliestDate) { //Från detta datumet och framåt
-        //Hämtar listan med alla produkter som man köpt från och med earliestDate
-        // om earliestDate är null så hämtas alla
-        return null;
     }
 
     public boolean addToShoppingCart(int user_id, int product_id) {
