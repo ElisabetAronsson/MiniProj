@@ -373,7 +373,7 @@ public class ProfileForm implements ActionListener {
                 }
             case "showInbox":
                 try {
-                    visitWishlistButton.setEnabled(false);
+                    visitWishlistButton.setEnabled(true);
                     c.accessInbox();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
