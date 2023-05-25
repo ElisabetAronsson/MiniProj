@@ -167,6 +167,7 @@ public class Server {
 
     private void addWishToDataBase(Wish wish,ObjectOutputStream oos) throws IOException, SQLException {
         oos.writeObject(wishProcedures.addWishToDataBase(wish));
+        clientManager.refreshWishlist(wish.getUserID());
         oos.flush();
     }
     private void sendWishListToClient(int userID,ObjectOutputStream oos) throws SQLException, IOException {

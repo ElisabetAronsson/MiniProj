@@ -173,6 +173,9 @@ public class ProfileForm implements ActionListener {
         buyProductsInCart.setActionCommand("buyProductsFromCart");
         visitWishlistButton.addActionListener(this);
         visitWishlistButton.setActionCommand("visitWishlist");
+
+        createWishButton.addActionListener(this);
+        createWishButton.setActionCommand("createWish");
     }
 
     /**

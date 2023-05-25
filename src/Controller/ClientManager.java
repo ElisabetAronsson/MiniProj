@@ -30,18 +30,28 @@ public class ClientManager {
         this.clients.remove(userId);
     }
 
-    public void addClient(ClientModel client){
+    public void addClient(ClientModel client) {
         this.clients.put(client.getUserId(),client);
+        refreshWishlist(client.getUserId());
         System.out.println("Client added id: "+this.clients.get(client.getUserId()).getUserId());
+
     }
 
-    public void refreshWishlist(int userId) throws SQLException {
-        Hashtable wishlist = wishProcedures.getUserWishlist(userId);
-        ClientModel client = clients.get(userId);
-        if (client != null) {
-            client.setWishlist(wishlist);
+    public void refreshWishlist(int userId) {
+        try {
+            Hashtable wishlist = wishProcedures.getUserWishlist(userId);
+            ClientModel client = clients.get(userId);
+            if (client != null) {
+                client.setWishlist(wishlist);
+                System.out.println("Refreshwishlist called");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error refreshing wishlist for user " + userId);
+            e.printStackTrace();  // Or log the error using your logging framework
+            // Add your error handling logic here, for example retry the operation
         }
     }
+
 
 
 

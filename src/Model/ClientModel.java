@@ -2,11 +2,12 @@ package Model;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.ObjectOutputStream;
+import java.util.Hashtable;
 
 public class ClientModel {
     private int userId;
     private ObjectOutputStream oos;
-    private Hashtable<String, DefaultTableModel> wishlist;
+    private Hashtable wishlist;
 
 
     public ClientModel(int userId, ObjectOutputStream oos){
@@ -19,7 +20,7 @@ public class ClientModel {
         return userId;
     }
 
-    public void setWishlist(Hashtable<String, DefaultTableModel> wishlist) {
+    public void setWishlist(Hashtable wishlist) {
         this.wishlist = wishlist;
     }
 
