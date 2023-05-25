@@ -54,7 +54,7 @@ public class ProfileForm implements ActionListener {
         myInventoryButton = new JButton("My Inventory");
         removeProductFromCart = new JButton("Remove Product");
         buyProductsInCart = new JButton("Buy Products");
-        visitWishlistButton = new JButton("Visit Wishlist");
+        visitWishlistButton = new JButton("Wishlist");
         createWishButton = new JButton("Create new Wish");
         inboxButton = new JButton("Inbox");
 
