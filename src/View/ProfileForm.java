@@ -32,6 +32,7 @@ public class ProfileForm implements ActionListener {
     private JButton removeProductFromCart;
     private JButton buyProductsInCart;
 
+    private JButton wishlistButton;
 
 
     public ProfileForm(Client c) {
@@ -39,7 +40,9 @@ public class ProfileForm implements ActionListener {
         returnButton = new JButton("Marketplace");
         myRequests =  new JButton("Requests");
         orderHistory = new JButton("Order History");
+        wishlistButton = new JButton("Visit Wishlist");
         acceptRequestButton = new JButton("Accept Request");
+        wishlistButton = new JButton("Visit Wishlist");
         declineRequestButton = new JButton("Decline Request");
         searchByDate = new JButton("Search by date");
         title = new JLabel("My Inventory");
@@ -67,11 +70,13 @@ public class ProfileForm implements ActionListener {
         profilePanel.add(myInventoryButton);
         profilePanel.add(removeProductFromCart);
         profilePanel.add(buyProductsInCart);
+        profilePanel.add(wishlistButton);
 
         returnButton.setBounds (100, 450, 120, 25);
         myRequests.setBounds(550, 450, 120, 25);
         orderHistory.setBounds(750, 450,120,25);
         acceptRequestButton.setBounds(750, 500, 120, 25);
+        wishlistButton.setBounds(400, 450, 120, 25);
         declineRequestButton.setBounds(550, 500, 120, 25);
         removeProductFromCart.setBounds(750, 500, 120, 25);
         buyProductsInCart.setBounds(550, 500, 120, 25);
@@ -123,6 +128,8 @@ public class ProfileForm implements ActionListener {
         removeProductFromCart.setActionCommand("removeProductFromCart");
         buyProductsInCart.addActionListener(this);
         buyProductsInCart.setActionCommand("buyProductsFromCart");
+        wishlistButton.addActionListener(this);
+        wishlistButton.setActionCommand("visitWishlist");
     }
 
     /**
@@ -254,6 +261,14 @@ public class ProfileForm implements ActionListener {
                 break;
             case "removeProductFromCart":
                 removeFromCart();
+                break;
+
+            case "visitWishlist":
+                try {
+                    c.accessWishlist();  // Call the new method in the Client class
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 break;
             case "buyProductsFromCart":
                 try {
