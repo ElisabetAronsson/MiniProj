@@ -3,6 +3,10 @@ package View;
 import Controller.Client;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +40,7 @@ public class ProfileForm implements ActionListener {
 
     public ProfileForm(Client c) {
         this.c = c;
-        returnButton = new JButton("Marketplace");
+        returnButton = new JButton("← Marketplace");
         myRequests =  new JButton("Requests");
         orderHistory = new JButton("Order History");
         acceptRequestButton = new JButton("Accept Request");
@@ -72,16 +76,33 @@ public class ProfileForm implements ActionListener {
         profilePanel.add(removeProductFromCart);
         profilePanel.add(buyProductsInCart);
 
+        returnButton.setFocusPainted(false);
+        returnButton.setContentAreaFilled(false);
+        returnButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        myInventoryButton.setFocusPainted(false);
+        myInventoryButton.setContentAreaFilled(false);
+        myInventoryButton.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        myRequests.setFocusPainted(false);
+        myRequests.setContentAreaFilled(false);
+        myRequests.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
+        orderHistory.setFocusPainted(false);
+        orderHistory.setContentAreaFilled(false);
+        orderHistory.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+
         returnButton.setBounds (100, 450, 120, 25);
-        myRequests.setBounds(550, 450, 120, 25);
-        orderHistory.setBounds(750, 450,120,25);
-        acceptRequestButton.setBounds(750, 500, 120, 25);
-        declineRequestButton.setBounds(550, 500, 120, 25);
+        myInventoryButton.setBounds(100,475,120,25);
+        myRequests.setBounds(100, 500, 120, 25);
+        orderHistory.setBounds(100, 525,120,25);
+
+        acceptRequestButton.setBounds(500, 450, 150, 25);
+        declineRequestButton.setBounds(700, 450, 150, 25);
         removeProductFromCart.setBounds(750, 500, 120, 25);
         buyProductsInCart.setBounds(550, 500, 120, 25);
 
-        searchByDate.setBounds(750, 500, 120, 25);
-        myInventoryButton.setBounds(240,450,120,25);
+        searchByDate.setBounds(700, 450, 150, 25);
 
         title.setBounds((944/2)-90, 20, 180,40);
         title.setFont(new Font("Serif", Font.PLAIN, 30));
