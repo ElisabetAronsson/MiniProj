@@ -337,4 +337,9 @@ public class Client {
     }
 
 
+    public void accessInbox() throws IOException{
+        Request request = new Request("","showInbox", userId);
+        oos.writeObject(request);
+        oos.flush();
+    }
 }

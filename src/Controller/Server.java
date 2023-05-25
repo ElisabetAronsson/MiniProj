@@ -107,6 +107,8 @@ public class Server {
                             }
                             else if(request.getRequestType().equals("requestItemFromCart")){
                                 productProcedures.requestItemFromCart(request.getUserId(), request.getProduct_id());
+                            }else if(request.getRequestType().equals("showInbox")){
+                                productProcedures.getAvailableWishlist(request.getUserId());
                             }
 
                         }
@@ -174,6 +176,11 @@ public class Server {
 
     private void sendClientOrderHistory(int userId, ObjectOutputStream oos) throws IOException, SQLException {
         oos.writeObject(productProcedures.getOrderHistory(userId));
+        oos.flush();
+    }
+
+    private void sendClientAvailableWishlist(int userId, ObjectOutputStream oos)throws IOException, SQLException{
+        oos.writeObject(productProcedures.getAvailableWishlist(userId));
         oos.flush();
     }
 

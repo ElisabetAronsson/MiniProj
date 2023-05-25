@@ -173,6 +173,8 @@ public class ProfileForm implements ActionListener {
         buyProductsInCart.setActionCommand("buyProductsFromCart");
         visitWishlistButton.addActionListener(this);
         visitWishlistButton.setActionCommand("visitWishlist");
+        inboxButton.addActionListener(this);
+        inboxButton.setActionCommand("getInbox");
     }
 
     /**
@@ -241,7 +243,7 @@ public class ProfileForm implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        switch (action){
+        switch (action) {
             case "marketplace":
                 try {
                     searchByDate.setVisible(false);
@@ -301,7 +303,7 @@ public class ProfileForm implements ActionListener {
                 }
                 break;
             case "acceptRequest":
-                    acceptRequest();
+                acceptRequest();
                 break;
             case "declineRequest":
                 declineRequest();
@@ -364,6 +366,12 @@ public class ProfileForm implements ActionListener {
             case "buyProductsFromCart":
                 try {
                     requestProductsInCart();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            case "getInbox":
+                try {
+                    c.accessInbox();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
