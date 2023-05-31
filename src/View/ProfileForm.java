@@ -391,12 +391,14 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                break;
             case "buyProductsFromCart":
                 try {
                     requestProductsInCart();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                break;
             case "showInbox":
                 try {
                     visitWishlistButton.setEnabled(true);
@@ -404,6 +406,7 @@ public class ProfileForm implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                break;
         }
     }
 
