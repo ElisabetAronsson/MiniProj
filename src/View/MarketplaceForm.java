@@ -2,7 +2,6 @@ package View;
 
 
 import Controller.Client;
-import Model.Request;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

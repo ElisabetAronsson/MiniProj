@@ -26,11 +26,22 @@ public class RegisterForm implements ActionListener {
     private JTextField dateOfBirthTextField;
     private JButton goBackButton;
 
+    private JLabel firstNameLabel;
+    private JLabel lastNameLabel;
+    private JTextField firstNameTextField;
+    private JTextField lastNameTextField;
+
+
     public RegisterForm(Client c) {
         //Assign the client variable to the local one.
         this.c = c;
 
         //construct components
+        firstNameLabel = new JLabel("First name:");
+        firstNameTextField = new JTextField(5);
+        lastNameLabel = new JLabel("Last name:");
+        lastNameTextField = new JTextField(5);
+
         passwordTextField = new JTextField (5);
         usernameTextField = new JTextField (5);
         userNameLabel = new JLabel ("Username:");
@@ -48,6 +59,10 @@ public class RegisterForm implements ActionListener {
         registerPanel.setLayout (null);
 
         //add components
+        registerPanel.add(firstNameLabel);
+        registerPanel.add(firstNameTextField);
+        registerPanel.add(lastNameLabel);
+        registerPanel.add(lastNameTextField);
         registerPanel.add (passwordTextField);
         registerPanel. add (usernameTextField);
         registerPanel.add (userNameLabel);
@@ -60,16 +75,21 @@ public class RegisterForm implements ActionListener {
         registerPanel.add (goBackButton);
 
         //set component bounds (only needed by Absolute Positioning)
-        passwordTextField.setBounds (385, 205, 165, 25);
-        usernameTextField.setBounds (385, 145, 165, 25);
-        userNameLabel.setBounds (385, 115, 100, 25);
-        passwordLabel.setBounds (385, 175, 100, 25);
-        registerButton.setBounds (410, 380, 120, 25);
-        emailLabel.setBounds (385, 235, 100, 25);
-        emailTextField.setBounds (385, 265, 165, 25);
-        dateOfBirthLabel.setBounds (385, 295, 100, 25);
-        dateOfBirthTextField.setBounds (385, 325, 165, 25);
-        goBackButton.setBounds (410, 420, 120, 25);
+        firstNameLabel.setBounds(389,75,100,25);
+        firstNameTextField.setBounds(389,25+80,165,25);
+        lastNameLabel.setBounds(389,55+80,100,25);
+        lastNameTextField.setBounds(389,85+80,165,25);
+
+        userNameLabel.setBounds (389, 115+80, 100, 25);
+        usernameTextField.setBounds (389, 145+80, 165, 25);
+        passwordLabel.setBounds (389, 175+80, 100, 25);
+        passwordTextField.setBounds (389, 205+80, 165, 25);
+        emailLabel.setBounds (389, 235+80, 100, 25);
+        emailTextField.setBounds (389, 265+80, 165, 25);
+        dateOfBirthLabel.setBounds (389, 295+80, 100, 25);
+        dateOfBirthTextField.setBounds (389, 325+80, 165, 25);
+        registerButton.setBounds (412, 380+80, 120, 25);
+        goBackButton.setBounds (412, 420+80, 120, 25);
 
         //Add listeners for the buttons.
         addListeners();

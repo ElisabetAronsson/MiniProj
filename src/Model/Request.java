@@ -1,7 +1,5 @@
 package Model;
 
-import Controller.Server;
-
 import java.io.Serializable;
 
 public class Request implements Serializable {

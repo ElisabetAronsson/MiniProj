@@ -1,7 +1,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
  * This class represents a product.

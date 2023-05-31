@@ -7,7 +7,6 @@ import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
 import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * This is the class for the client.
@@ -253,6 +252,7 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("My products"));
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("My Inventory");
+            mainForm.getProfileForm().inventoryButtons();
 
         }
 
@@ -284,6 +284,7 @@ public class Client {
             mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
             mainForm.setProfilePanel();
             mainForm.getProfileForm().setTitle("My Wishlist");
+
         }if(hashtable.containsKey("Available wishlist")){
             mainForm.getProfileForm().createTableModel(hashtable.get("Available wishlist"));
             mainForm.setProfilePanel();
@@ -327,9 +328,6 @@ public class Client {
     public static void main(String[] args) {
         //Startar main fönstret.
             new Client();
-    }
-    public User getCurrentUser(){
-        return new User("todo", "later", true); //I guess we need an instance variable for this?
     }
 
     public int getUserId() {

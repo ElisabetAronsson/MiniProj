@@ -1,15 +1,9 @@
 package DataAccessLayer;
-import Model.Product;
-import Model.User;
 import Model.Wish;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
 public class WishProcedures
 {
 

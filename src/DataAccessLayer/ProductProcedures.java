@@ -1,15 +1,11 @@
 package DataAccessLayer;
 
 import Model.Product;
-import Model.User;
 
 import javax.swing.table.DefaultTableModel;
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProductProcedures {

@@ -3,17 +3,11 @@ package View;
 import Controller.Client;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 /**
@@ -492,5 +486,20 @@ public class ProfileForm implements ActionListener {
     private void createWish() throws IOException {
         String type=JOptionPane.showInputDialog(null,"Enter the products type");
         c.sendWishToServer(c.getUserId(), type);
+    }
+
+    public void inventoryButtons(){
+        searchByDate.setVisible(false);
+        acceptRequestButton.setVisible(false);
+        declineRequestButton.setVisible(false);
+        removeProductFromCart.setVisible(false);
+        buyProductsInCart.setVisible(false);
+        createWishButton.setVisible(false);
+        inboxButton.setVisible(false);
+
+        myInventoryButton.setEnabled(false);
+        orderHistory.setEnabled(true);
+        myRequests.setEnabled(true);
+        visitWishlistButton.setEnabled(true);
     }
 }
