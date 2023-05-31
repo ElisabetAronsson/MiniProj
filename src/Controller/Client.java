@@ -278,7 +278,7 @@ public class Client {
         if(hashtable.containsKey("Orders")){
             mainForm.getProfileForm().createTableModel(hashtable.get("Orders"));
             mainForm.setProfilePanel();
-            mainForm.getProfileForm().setTitle("Orders by date");
+            mainForm.getProfileForm().setTitle("Orders by Date");
         }
         if(hashtable.containsKey("My Wishlist")){
             mainForm.getProfileForm().createTableModel(hashtable.get("My Wishlist"));
@@ -288,7 +288,7 @@ public class Client {
         }if(hashtable.containsKey("Available wishlist")){
             mainForm.getProfileForm().createTableModel(hashtable.get("Available wishlist"));
             mainForm.setProfilePanel();
-            mainForm.getProfileForm().setTitle("Available wishlist");
+            mainForm.getProfileForm().setTitle("Available Wishlist");
         }
     }
 

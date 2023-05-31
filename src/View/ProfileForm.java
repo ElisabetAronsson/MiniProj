@@ -128,7 +128,7 @@ public class ProfileForm implements ActionListener {
 
         searchByDate.setBounds(700, 450, 150, 25);
 
-        title.setBounds((944/2)-90, 20, 180,40);
+        title.setBounds((944/2)-110, 20, 220,40);
         title.setFont(new Font("Serif", Font.PLAIN, 30));
 
         addListeners();
